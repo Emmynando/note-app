@@ -46,7 +46,7 @@ export default function Profile() {
 
   return (
     <main className="px-4 py-2">
-      <section className="flex items-center justify-between">
+      <section className="flex items-center justify-between py-2">
         <div className="flex items-center gap-1">
           <span className="inline-flex size-[36px]">
             <Image

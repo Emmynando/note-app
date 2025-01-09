@@ -11,7 +11,8 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        priText: "A4C6ED",
+        secClr: "#383A3D",
+        priText: "#A4C6ED",
         boxShadow: {
           custom:
             "0 1px 3px rgba(255, 255, 255, 0.12), 0 1px 2px rgba(255, 255, 255, 0.24)",

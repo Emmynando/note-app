@@ -67,6 +67,12 @@ input {
 @layer base {
   @font-face {
     font-family: "gabarito";
-    src: url("/fonts/circularweb-book.woff2") format("woff2");
+    src: url("/fonts/Gabarito-Regular") format("truetype");
+  }
+}
+
+@layer utilities {
+  .container {
+    @apply px-4 py-2;
   }
 }
