@@ -1,13 +1,12 @@
 import { ReactNode } from "react";
 
 interface NavItemsProps {
-  id: string;
   icon: ReactNode;
   text: string;
   count: string;
 }
 
-export default function NavItems({ icon, text, count, id }: NavItemsProps) {
+export default function NavItems({ icon, text, count }: NavItemsProps) {
   return (
     <div className="flex justify-between py-2">
       <p className="flex items-center gap-2 hover:text-priText text-base">

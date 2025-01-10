@@ -23,7 +23,7 @@ export default function AddTask() {
 
       {navCalander.map((item) => (
         <NavItems
-          id={item.id}
+          key={item.id}
           text={item.text}
           count={item.count}
           icon={<item.icon />}

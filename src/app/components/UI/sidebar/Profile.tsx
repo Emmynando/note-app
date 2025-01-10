@@ -13,14 +13,13 @@ import { Flip } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(Flip);
-export default function Profile() {
-  const [showList, setShowList] = useState(false);
 
-  function handleToggle() {
-    setShowList((prev) => !prev);
-    console.log("clicked");
-  }
+interface ProfileProps {
+  showList: boolean;
+  handleToggle: () => void;
+}
 
+export default function Profile({ showList, handleToggle }: ProfileProps) {
   useGSAP(
     () => {
       if (showList) {
