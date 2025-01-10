@@ -1,11 +1,11 @@
 "use client";
-import { useState } from "react";
-import { LuCalendarDays } from "react-icons/lu";
-import { TiStarOutline } from "react-icons/ti";
+import { ReactNode, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { TiStarOutline, TiStarFullOutline } from "react-icons/ti";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap/all";
 import { Flip } from "gsap/all";
+import clsx from "clsx";
 
 gsap.registerPlugin(Flip);
 
@@ -14,22 +14,29 @@ interface DayCardProps {
   bodyText: string;
   header: string;
   theDay: string;
+  todayDate?: string;
+  dayAlarm: ReactNode;
+  toogleDeetButton?: ReactNode;
+  toogleDeetButtonTwo?: ReactNode;
+  showDeet: boolean;
+  showCard: boolean;
+  setShowCard: (text: any) => void;
+  toggleDeets: () => void;
 }
 export default function DayCard({
   mainText,
   header,
   theDay,
+  todayDate,
   bodyText,
+  showDeet,
+  toggleDeets,
+  toogleDeetButton,
+  toogleDeetButtonTwo,
+  dayAlarm,
+  showCard,
+  setShowCard,
 }: DayCardProps) {
-  const [showCard, setShowCard] = useState(true);
-  const [showDeet, setShowDeet] = useState(false);
-
-  function toogleDeets() {
-    if (showCard) {
-      setShowDeet((prevState: any) => !prevState);
-    }
-  }
-
   useGSAP(
     () => {
       if (showCard) {
@@ -59,7 +66,7 @@ export default function DayCard({
         <h2 className="font-medium text-xl">{mainText}</h2>
         <button
           className="font-semibold text-xl text-priFont"
-          onClick={() => setShowCard((prev) => !prev)}>
+          onClick={() => setShowCard((prev: any) => !prev)}>
           {showCard ? <IoIosArrowDown /> : <IoIosArrowUp />}
         </button>
       </div>
@@ -75,8 +82,8 @@ export default function DayCard({
             <div className="flex items-end gap-4">
               <button
                 className="font-semibold text-base text-priFont"
-                onClick={toogleDeets}>
-                {showDeet ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                onClick={toggleDeets}>
+                {showDeet ? toogleDeetButton : toogleDeetButtonTwo}
               </button>
               <p className="font-semibold text-base text-priFont">...</p>
             </div>
@@ -88,17 +95,39 @@ export default function DayCard({
           )}
           <section className="flex justify-between items-center pl-4 mt-2">
             <div className="flex gap-2 items-center">
-              <p className="text-xs font-medium text-[#FF7C66]">{theDay}</p>
+              <p
+                className={clsx(
+                  "text-xs font-medium text-[#EF4444]",
+                  theDay !== "Yesterday" && "!text-[#FF7C66]"
+                )}>
+                {theDay}
+              </p>
+              {theDay === "Today" && (
+                <span className="size-2 rounded-full bg-secFade" />
+              )}
+              <p
+                className={clsx(
+                  "text-xs font-medium text-[#EF4444]",
+                  theDay !== "Yesterday" && "!text-[#FF7C66]"
+                )}>
+                {todayDate}
+              </p>
               <span className="size-2 rounded-full bg-secFade" />
               <p className="text-xs font-medium text-secFade"> Tasks</p>
             </div>
             <div className="flex items-center gap-4 ">
-              <p className="text-xl font-medium text-prifont">
-                <TiStarOutline />
+              <p
+                className={clsx(
+                  "text-xl font-medium text-prifont",
+                  theDay !== "Yesterday" && "!text-[#FF7C66]"
+                )}>
+                {theDay === "Yesterday" ? (
+                  <TiStarOutline />
+                ) : (
+                  <TiStarFullOutline />
+                )}
               </p>
-              <p className="font-medium text-prifont">
-                <LuCalendarDays />
-              </p>
+              <p className="font-medium text-prifont">{dayAlarm}</p>
             </div>
           </section>
         </div>
