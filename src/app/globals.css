@@ -76,6 +76,10 @@ input {
     @apply px-4 py-2;
   }
 
+  .check-box {
+    @apply relative before:content-[''] before:size-4 before:rounded-full before:border-2 relative flex items-center gap-2;
+  }
+
   .scrollbar-custom::-webkit-scrollbar {
     @apply size-[5px];
   }

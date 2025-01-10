@@ -13,6 +13,9 @@ export default {
         foreground: "var(--foreground)",
         secClr: "#383A3D",
         priText: "#A4C6ED",
+        priFont: "#e0e0e0",
+        fadeWhite: "rgba(255,255,255, 0.5)",
+        secFade: "rgba(191,191,191, 0.4)",
         boxShadow: {
           custom:
             "0 1px 3px rgba(255, 255, 255, 0.12), 0 1px 2px rgba(255, 255, 255, 0.24)",

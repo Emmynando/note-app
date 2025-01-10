@@ -1,5 +1,5 @@
-import { navWorkspace } from "../../../../components/constant";
-import NavItems from "../../../../components/UI/sidebar/NavItemsComp";
+import { navWorkspace } from "../../constant";
+import NavItems from "../sidebar/NavItemsComp";
 
 export default function WorkSpace() {
   return (

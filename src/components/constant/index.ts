@@ -11,12 +11,14 @@ export const navCalander = [
     icon: MdOutlineWbSunny,
     text: "My Day",
     count: "0",
+    href: "/myday",
   },
   {
     id: "2",
     icon: LuCalendarDays,
     text: "Calender",
     count: "0",
+    href: "/calendar",
   },
 ];
 

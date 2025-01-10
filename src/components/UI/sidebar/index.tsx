@@ -13,7 +13,6 @@ export default function Sidebar() {
 
   function handleToggle() {
     setShowList((prev) => !prev);
-    console.log("clicked");
   }
 
   return (

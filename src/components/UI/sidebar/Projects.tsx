@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import { navProjects } from "../../../../components/constant";
-import NavItems from "../../../../components/UI/sidebar/NavItemsComp";
+import { navProjects } from "../../constant";
+import NavItems from "../sidebar/NavItemsComp";
 
 export default function Projects() {
   return (

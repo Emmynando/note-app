@@ -1,13 +1,10 @@
-"use client";
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import userIcon from "../../../../../public/svg/userIcon.svg";
+import userIcon from "../../../../public/svg/userIcon.svg";
 import { FiSidebar, FiHelpCircle, FiLogOut } from "react-icons/fi";
 import { PiUserSwitch } from "react-icons/pi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import clsx from "clsx";
 import gsap from "gsap";
 import { Flip } from "gsap/all";
 import { useGSAP } from "@gsap/react";

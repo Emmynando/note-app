@@ -27,6 +27,7 @@ export default function AddTask() {
           text={item.text}
           count={item.count}
           icon={<item.icon />}
+          href={item.href}
         />
       ))}
     </main>
