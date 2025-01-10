@@ -1,6 +1,6 @@
 import { FiPlus } from "react-icons/fi";
-import { navCalander } from "../constant";
-import NavItems from "../UI/sidebar/NavItemsComp";
+import { navCalander } from "../../constant";
+import NavItems from "./NavItemsComp";
 import { FiSearch } from "react-icons/fi";
 
 export default function AddTask() {

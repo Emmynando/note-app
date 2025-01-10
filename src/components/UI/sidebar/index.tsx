@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import AddTask from "../../Layout/AddTask";
+import AddTask from "./AddTask";
 import Profile from "./Profile";
 import Projects from "./Projects";
 import WorkSpace from "./WorkSpace";
