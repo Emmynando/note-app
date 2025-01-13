@@ -4,6 +4,9 @@ import { GrNotes } from "react-icons/gr";
 import { FaTasks } from "react-icons/fa";
 import { CiBoxList } from "react-icons/ci";
 import { PiHashStraightBold } from "react-icons/pi";
+import moment from "moment";
+import { EventItem } from "@/types";
+import { Views } from "react-big-calendar";
 
 export const navCalander = [
   {
@@ -54,5 +57,48 @@ export const navProjects = [
     icon: PiHashStraightBold,
     text: "Tasks",
     count: "0",
+  },
+];
+
+export const VIEW_OPTIONS = [
+  {
+    id: Views.WEEK,
+    label: "Week",
+  },
+  {
+    id: Views.DAY,
+    label: "Day",
+  },
+  { id: Views.MONTH, label: "Month" },
+];
+
+export const EVENTS: EventItem[] = [
+  {
+    start: moment("2025-01-14T14:00:00").toDate(),
+    end: moment("2025-01-15T14:00:00").toDate(),
+    data: {
+      appointment: {
+        id: 1,
+        status: "P",
+        category: "New York",
+        resource: "Dr Alex",
+        title: "call Them",
+      },
+    },
+    resourceId: 1,
+  },
+  {
+    start: moment("2025-01-15T12:00:00").toDate(),
+    end: moment("2025-01-15T19:00:00").toDate(),
+    data: {
+      appointment: {
+        id: 2,
+        status: "CI",
+        category: "Washington",
+        resource: "Dr David",
+        title: "Email Back Ms. James",
+      },
+    },
+    resourceId: 2,
   },
 ];

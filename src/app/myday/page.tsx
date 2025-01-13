@@ -1,11 +1,13 @@
 "use client";
 import { useState } from "react";
 import DayCard from "@/components/Layout/MyApp/DayCard";
-import DayHeader from "@/components/Layout/MyApp/Header";
+import DayHeader from "@/components/UI/Header";
 import { MdOutlineAccessAlarms } from "react-icons/md";
 import { LuCalendarDays } from "react-icons/lu";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import ProgressBar from "@/components/Layout/MyApp/PogressBar";
+import wand from "../../../public/svg/wand.svg";
+import SvgViewer from "@/components/UI/SVGViewer";
 
 export default function MyDay() {
   const [showPrevious, setShowPrevious] = useState(true);
@@ -18,7 +20,7 @@ export default function MyDay() {
 
   return (
     <main>
-      <DayHeader />
+      <DayHeader crumb="My Day" />
       <DayCard
         showCard={showPrevious}
         setShowCard={setShowPrevious}
@@ -59,7 +61,7 @@ export default function MyDay() {
         mainText="Upcoming"
         header="Black Friday"
         theDay="Tomorrow"
-        dayAlarm={<MdOutlineAccessAlarms />}
+        dayAlarm={<SvgViewer svgFile={wand} className="size-4" />}
         bodyText="Email Mrs. James for the new intern we have next week from Alex
                 Carter, a marketing student from Brookfield University. Confirm
                 their start date, schedu..."

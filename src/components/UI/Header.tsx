@@ -1,7 +1,8 @@
 import { HiOutlineLightBulb } from "react-icons/hi2";
-import { LuBarcode } from "react-icons/lu";
+import menuIcon from "../../../public/svg/menu.svg";
+import SvgViewer from "./SVGViewer";
 
-export default function DayHeader() {
+export default function DayHeader({ crumb }: { crumb: string }) {
   const date = new Date();
 
   // Format the date (e.g., "Thu 07, November")
@@ -20,7 +21,7 @@ export default function DayHeader() {
   return (
     <main className="flex justify-between">
       <section>
-        <h2 className="font-semibold text-[32px] text-[#e3e3e8]">My Day</h2>
+        <h2 className="font-semibold text-[32px] text-[#e3e3e8]">{crumb}</h2>
       </section>
 
       {/* second div */}
@@ -33,7 +34,7 @@ export default function DayHeader() {
         </div>
         <div className="flex items-start gap-2 pt-[1rem]">
           <p className="font-semibold text-[#e0e0e0] text-[21px]">
-            <LuBarcode />
+            <SvgViewer svgFile={menuIcon} className="size-6" />
           </p>
           <p className="font-semibold text-[#e0e0e0] text-[21px]">
             <HiOutlineLightBulb />
