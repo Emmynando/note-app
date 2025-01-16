@@ -3,7 +3,7 @@ import DayHeader from "@/components/UI/Header";
 
 export default function Calendar() {
   return (
-    <main>
+    <main className="h-full !overflow-hidden relative">
       <DayHeader crumb="Calendar" />
       <CalendarComponent />
     </main>

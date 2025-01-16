@@ -95,25 +95,28 @@ const CalendarComponent = () => {
           )}
         </div>
       </div>
-      <Calendar
-        localizer={localizer}
-        events={EVENTS}
-        startAccessor="start"
-        endAccessor="end"
-        defaultView={Views.WEEK}
-        view={view}
-        toolbar={false}
-        style={{
-          height: 480,
-          margin: "0 auto",
-          borderBottom: "2px solid black",
-        }}
-        className="rounded-lg shadow-lg bg-inherit"
-        components={components}
-        date={date} // Pass the `date` state
-        onNavigate={(newDate) => setDate(newDate)} // Sync navigation
-        onView={(newView) => handleViewChange(newView)} // Sync view change
-      />
+      <div className="relative">
+        <Calendar
+          localizer={localizer}
+          events={EVENTS}
+          startAccessor="start"
+          endAccessor="end"
+          defaultView={Views.WEEK}
+          view={view}
+          toolbar={false}
+          step={60} // 60 minutes per slot
+          timeslots={1} // Single slot per hour
+          style={{
+            height: 450,
+            margin: "0 auto",
+          }}
+          className="shadow-lg bg-inherit"
+          components={components}
+          date={date} // Pass the `date` state
+          onNavigate={(newDate) => setDate(newDate)} // Sync navigation
+          onView={(newView) => handleViewChange(newView)} // Sync view change
+        />
+      </div>
     </div>
   );
 };

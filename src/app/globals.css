@@ -70,7 +70,6 @@ input {
 
 .rbc-calendar {
   background-color: #1e1e20;
-  border: none !important;
   box-shadow: "0 1px 3px rgba(255, 255, 255, 0.12), 0 1px 2px rgba(255, 255, 255, 0.24)";
 }
 
@@ -83,35 +82,52 @@ input {
   align-items: center;
   border: none !important;
   padding: 0.8rem 0 !important;
-  border-right: 1px solid #2f3033 !important;
 }
 
 .rbc-time-header {
-  border: none !important;
   width: 100%;
 }
 
 /* remove the extra row at header */
 .rbc-allday-cell {
-  display: none;
-}
-
-.rbc-time-header-content {
-  border: none !important;
+  display: none !important;
 }
 
 /* today */
 .rbc-time-header-cell .rbc-today {
-  background-color: rgba(191, 191, 191, 0.1);
+  background-color: rgba(191, 191, 191, 0.1) !important;
+}
+
+.rbc-today {
+  background-color: rgba(191, 191, 191, 0.1) !important;
 }
 
 /* time text */
 .rbc-time-slot {
+  border-color: rgba(191, 191, 191, 0.1) !important;
   z-index: 2;
 }
 
-.rbc-time-slot:not(.rbc-today .rbc-time-slot) {
+.rbc-time-view {
+  border: none !important;
+  border-bottom: 0.5px solid rgba(191, 191, 191, 0.4) !important;
+}
+
+/* Time column */
+.rbc-timeslot-group {
+  border: none !important;
+  text-align: center;
+}
+
+.rbc-time-slot:not(.rbc-time-slot) {
   background-color: inherit;
+}
+.rbc-time-content {
+  border-top: none !important;
+}
+
+.rbc-time-content > * + * > * {
+  border-left: none !important;
 }
 
 .rbc-label {
