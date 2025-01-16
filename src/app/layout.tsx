@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import Sidebar from "../components/UI/sidebar";
+import IndexTask from "@/components/Layout/AddTask/IndexTask";
 
 const gabarito = localFont({
   src: "../fonts/Gabarito-Regular.ttf",
@@ -23,12 +24,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       {/* <body className={`${gabarito.variable} antialiased`}> */}
-      <body>
+      <body className="overflow-hidden">
+        <IndexTask />
         <div className="flex">
           <aside className="w-[30%]">
             <Sidebar />
           </aside>
-          <main className="flex-1 p-4 ">{children}</main>
+          <main className="flex-1">{children}</main>
         </div>
       </body>
     </html>

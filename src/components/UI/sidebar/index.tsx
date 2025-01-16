@@ -16,7 +16,7 @@ export default function Sidebar() {
   }
 
   return (
-    <main className="absolute inset-0 z-40 bg-[#2f3136] w-[25%] h-dvh ">
+    <main className="absolute inset-0 z-40 bg-[#2f3136] w-[25%] h-dvh">
       <Profile showList={showList} handleToggle={handleToggle} />
       <div
         className={clsx(

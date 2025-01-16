@@ -88,7 +88,8 @@ const CalendarComponent = () => {
                   "font-500 text-xl p-2",
                   id === view &&
                     "text-[#A4C6ED] bg-[#2a2b2e] rounded-md shadow-custom"
-                )}>
+                )}
+                key={id}>
                 {label}
               </button>
             )

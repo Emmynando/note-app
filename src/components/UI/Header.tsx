@@ -19,7 +19,7 @@ export default function DayHeader({ crumb }: { crumb: string }) {
     hour12: true,
   });
   return (
-    <main className="flex justify-between">
+    <main className="flex justify-between p-4">
       <section>
         <h2 className="font-semibold text-[32px] text-[#e3e3e8]">{crumb}</h2>
       </section>
