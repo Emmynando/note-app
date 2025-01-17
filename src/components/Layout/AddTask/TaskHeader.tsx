@@ -1,8 +1,11 @@
+"use client";
 import { IoClose } from "react-icons/io5";
 import { BsThreeDots } from "react-icons/bs";
 import { IoIosAdd } from "react-icons/io";
+import { useTask } from "@/store/AddListProvider";
 
 export default function TaskHeader() {
+  const { closeAddListModal } = useTask();
   return (
     <main className="flex justify-between items-center bg-[#393a3b] py-2 rounded-t-md px-2">
       <div>
@@ -19,7 +22,10 @@ export default function TaskHeader() {
         </button>
       </div>
       <div className="flex justify-around gap-4 ">
-        <IoClose className="text-priFont text-[1rem] " />
+        <IoClose
+          className="text-priFont text-[1rem] "
+          onClick={closeAddListModal}
+        />
         <BsThreeDots />
       </div>
     </main>

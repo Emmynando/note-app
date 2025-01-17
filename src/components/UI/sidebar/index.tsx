@@ -8,7 +8,7 @@ import { FiPlus } from "react-icons/fi";
 import { RiMenuAddFill } from "react-icons/ri";
 import clsx from "clsx";
 
-export default function Sidebar() {
+export default function Sidebar({ onClick }: { onClick: () => void }) {
   const [showList, setShowList] = useState(false);
 
   function handleToggle() {
@@ -31,10 +31,12 @@ export default function Sidebar() {
         className="px-4 absolute shadow-custom w-full bottom-[5%] border-t border-gray-500
       border-t-4">
         <div className="flex justify-between py-2">
-          <p className="flex items-center gap-2 hover:text-priText text-base">
+          <button
+            className="flex items-center gap-2 hover:text-priText text-base"
+            onClick={onClick}>
             <FiPlus />
             New List
-          </p>
+          </button>
           <span className="flex items-center justify-center p-2 rounded-full size-8">
             {" "}
             <RiMenuAddFill />
