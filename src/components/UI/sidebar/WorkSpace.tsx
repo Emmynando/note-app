@@ -12,6 +12,7 @@ export default function WorkSpace() {
             text={item.text}
             count={item.count}
             icon={<item.icon />}
+            href={item.href}
           />
         ))}
       </div>

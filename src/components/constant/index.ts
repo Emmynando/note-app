@@ -31,18 +31,21 @@ export const navWorkspace = [
     icon: CiBoxList,
     text: "All",
     count: "0",
+    href: "/all",
   },
   {
     id: "2",
     icon: FaTasks,
     text: "Tasks",
     count: "0",
+    href: "/",
   },
   {
     id: "3",
     icon: GrNotes,
     text: "Notes",
     count: "0",
+    href: "/",
   },
 ];
 export const navProjects = [
