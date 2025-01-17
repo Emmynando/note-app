@@ -1,6 +1,6 @@
 "use client";
 import { useTask } from "@/store/AddListProvider";
-import General from "./General";
+
 import Schedule from "./Schedule";
 import TaskHeader from "./TaskHeader";
 

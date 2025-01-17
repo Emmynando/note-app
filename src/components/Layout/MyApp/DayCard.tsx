@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { TiStarOutline, TiStarFullOutline } from "react-icons/ti";
 import { useGSAP } from "@gsap/react";
@@ -20,7 +20,7 @@ interface DayCardProps {
   toogleDeetButtonTwo?: ReactNode;
   showDeet: boolean;
   showCard: boolean;
-  setShowCard: (text: any) => void;
+  setShowCard: (text: boolean) => void;
   toggleDeets: () => void;
 }
 export default function DayCard({
@@ -66,7 +66,7 @@ export default function DayCard({
         <h2 className="font-medium text-xl">{mainText}</h2>
         <button
           className="font-semibold text-xl text-priFont"
-          onClick={() => setShowCard((prev: any) => !prev)}>
+          onClick={() => setShowCard(!showCard)}>
           {showCard ? <IoIosArrowDown /> : <IoIosArrowUp />}
         </button>
       </div>

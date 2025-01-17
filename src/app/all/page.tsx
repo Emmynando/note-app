@@ -9,12 +9,7 @@ import DayCard from "@/components/Layout/MyApp/DayCard";
 export default function AllScreen() {
   const [showCard, setShowCard] = useState(true);
   const [showPrevious, setShowPrevious] = useState(true);
-  const [showToday, setShowToday] = useState(true);
-  const [showUpcoming, setShowUpcoming] = useState(true);
-  const [showDeet, setShowDeet] = useState(false);
-  function toggleDeets() {
-    setShowDeet((prevState: any) => !prevState);
-  }
+
   return (
     <main>
       <DayHeader crumb="All" />
@@ -36,7 +31,7 @@ export default function AllScreen() {
           <h2 className="font-medium text-xl">Tasks</h2>
           <button
             className="font-semibold text-xl text-priFont"
-            onClick={() => setShowCard((prev: any) => !prev)}>
+            onClick={() => setShowCard((prev) => !prev)}>
             {showCard ? <IoIosArrowDown /> : <IoIosArrowUp />}
           </button>
         </div>

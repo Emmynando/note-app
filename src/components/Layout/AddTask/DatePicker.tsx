@@ -14,7 +14,7 @@ interface DatePickerProps {
 }
 
 const DatePickerComp = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const selectedDate = new Date();
   const [startDate, setStartDate] = useState<Date | null>(
     setHours(setMinutes(new Date(), 30), 16)
   );

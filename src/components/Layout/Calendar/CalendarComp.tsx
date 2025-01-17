@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useCallback, useEffect } from "react";
 import { Calendar, momentLocalizer, Views } from "react-big-calendar";
 import moment from "moment";
@@ -36,7 +37,7 @@ const CalendarComponent = () => {
     setMonth(date.toLocaleString("en-US", { month: "long" }));
   }, [date]);
 
-  const components: any = {
+  const components = {
     event: ({ event }: any) => {
       const data = event?.data;
       if (data?.appointment)

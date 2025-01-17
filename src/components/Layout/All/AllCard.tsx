@@ -1,6 +1,5 @@
 "use client";
-import { ReactNode, useState } from "react";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { ReactNode } from "react";
 import { TiStarOutline, TiStarFullOutline } from "react-icons/ti";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap/all";
@@ -18,13 +17,12 @@ interface DayCardProps {
   toogleDeetButtonTwo?: ReactNode;
   showDeet: boolean;
   showCard: boolean;
-  setShowCard: (text: any) => void;
+  setShowCard: (text: boolean) => void;
   toggleDeets: () => void;
 }
 
 gsap.registerPlugin(Flip);
 export default function AllCard({
-  mainText,
   header,
   theDay,
   todayDate,
@@ -35,7 +33,6 @@ export default function AllCard({
   toogleDeetButtonTwo,
   dayAlarm,
   showCard,
-  setShowCard,
 }: DayCardProps) {
   useGSAP(
     () => {

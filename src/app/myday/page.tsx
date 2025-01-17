@@ -15,7 +15,7 @@ export default function MyDay() {
   const [showUpcoming, setShowUpcoming] = useState(true);
   const [showDeet, setShowDeet] = useState(false);
   function toggleDeets() {
-    setShowDeet((prevState: any) => !prevState);
+    setShowDeet((prevState) => !prevState);
   }
 
   return (
