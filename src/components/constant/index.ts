@@ -6,7 +6,7 @@ import { CiBoxList } from "react-icons/ci";
 import { PiHashStraightBold } from "react-icons/pi";
 import moment from "moment";
 import { EventItem } from "@/types";
-import { Views } from "react-big-calendar";
+// import { Views } from "react-big-calendar";
 
 export const navCalander = [
   {
@@ -58,18 +58,6 @@ export const navProjects = [
     text: "Tasks",
     count: "0",
   },
-];
-
-export const VIEW_OPTIONS = [
-  {
-    id: Views.WEEK,
-    label: "Week",
-  },
-  {
-    id: Views.DAY,
-    label: "Day",
-  },
-  { id: Views.MONTH, label: "Month" },
 ];
 
 export const EVENTS: EventItem[] = [

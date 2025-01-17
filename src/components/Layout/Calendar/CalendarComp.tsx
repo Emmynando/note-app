@@ -5,12 +5,24 @@ import moment from "moment";
 import "moment-timezone";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import AppointmentEvent from "./AppointmentEvent";
-import { EVENTS, VIEW_OPTIONS } from "@/components/constant";
+import { EVENTS } from "@/components/constant";
 import clsx from "clsx";
 import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 
 const localizer = momentLocalizer(moment);
 type Keys = keyof typeof Views;
+
+export const VIEW_OPTIONS = [
+  {
+    id: Views.WEEK,
+    label: "Week",
+  },
+  {
+    id: Views.DAY,
+    label: "Day",
+  },
+  { id: Views.MONTH, label: "Month" },
+];
 
 const CalendarComponent = () => {
   const [date, setDate] = useState(new Date());

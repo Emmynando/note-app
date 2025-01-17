@@ -180,6 +180,13 @@ input {
   .check-box {
     @apply relative before:content-[''] before:size-4 before:rounded-full before:border-2 relative flex items-center gap-2;
   }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 
   .scrollbar-custom::-webkit-scrollbar {
     @apply size-[5px];
@@ -201,4 +208,16 @@ input {
   .scrollbar-custom::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(255, 255, 255, 0.3);
   }
+}
+
+/* tip tap */
+.ul,
+.ol {
+  padding: 0 1rem;
+  margin: 1.25rem 1rem 1.25rem 0.4rem;
+}
+
+li p {
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
 }
