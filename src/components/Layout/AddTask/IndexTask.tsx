@@ -24,11 +24,11 @@ export default function IndexTask() {
   }>({ startDate: null, endDate: null });
 
   // for handle Reminder
-  const handleRemindDateChange = (dates: {
-    startDate: Date | null;
-    endDate: Date | null;
-  }) => {
-    setSelectedRemindDates(dates);
+  const handleRemindDateChange = (date: Date | null) => {
+    setSelectedRemindDates({
+      startDate: date, // This includes the selected date and time
+      endDate: date, // Optionally same as startDate
+    });
   };
   // for handle schedule
   const handleScheduleDateChange = (dates: {
@@ -81,7 +81,7 @@ export default function IndexTask() {
           />
         )}
         {activeComponent === "Remind" && (
-          <RemindMe handleDateChange={handleRemindDateChange} />
+          <RemindMe onDateChange={handleRemindDateChange} />
         )}
         {activeComponent === "Schedule" && (
           <Schedule handleDateChange={handleScheduleDateChange} />
