@@ -6,7 +6,7 @@ import { FiSearch } from "react-icons/fi";
 export default function AddTask() {
   return (
     <main className="container border-b border-gray-500">
-      <button className="flex items-center gap-4 text-priText text-2xl my-4">
+      <button className="flex items-center gap-4 text-priText text-xl my-4">
         <FiPlus /> Add Task
       </button>
       <div className="relative w-full max-w-md mb-2">

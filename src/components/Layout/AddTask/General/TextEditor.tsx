@@ -22,17 +22,22 @@ import { FaListOl, FaList } from "react-icons/fa6";
 const TextEditor = () => {
   const editor = useEditor({
     extensions: [
-      Paragraph,
-      Blockquote,
+      // Paragraph,
+      // Blockquote,
       Document,
       StarterKit,
       Underline,
+      Paragraph.configure({
+        HTMLAttributes: {
+          class: "my-custom-paragraph",
+        },
+      }),
       Link.configure({
         openOnClick: true, // Links open in a new tab
         autolink: true, // Automatically convert URLs to links
       }),
       Placeholder.configure({
-        placeholder: "Write something here...",
+        placeholder: "Write here...",
       }),
     ],
     content: "",
@@ -43,13 +48,9 @@ const TextEditor = () => {
     <div className="button-group border border-secFade h-[18rem] rounded-md p-2">
       <div className="flex items-center gap-2 p-2">
         <button
-          onClick={() => editor.chain().focus().setParagraph()}
-          disabled={!editor.can().chain().focus().setParagraph().run()}>
-          <PiParagraph />
-        </button>
-        <button
           onClick={() => editor.chain().focus().toggleBold().run()}
-          disabled={!editor.can().chain().focus().toggleBold().run()}>
+          disabled={!editor.can().chain().focus().toggleBold().run()}
+          className="border-l border-secFade pl-2">
           <AiOutlineBold />
         </button>
 
@@ -64,8 +65,14 @@ const TextEditor = () => {
           <AiOutlineItalic />
         </button>
         <button
+          onClick={() => editor.chain().focus().setParagraph()}
+          disabled={!editor.can().chain().focus().setParagraph().run()}>
+          <PiParagraph />
+        </button>
+        <button
           onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-          disabled={!editor.can().chain().focus().toggleCodeBlock().run()}>
+          disabled={!editor.can().chain().focus().toggleCodeBlock().run()}
+          className="border-r pr-2 border-secFade">
           <PiCodeBlock />
         </button>
         <button
@@ -97,9 +104,12 @@ const TextEditor = () => {
       </div>
       <EditorContent
         editor={editor}
-        className="h-68 max-h-75 overflow-scroll placeholder:text-white scrollbar-none caret-white"
-        placeholder="here"
-        style={{ height: "15rem", maxHeight: "17rem", caretColor: "white" }}
+        className="h-68 max-h-75 overflow-scroll scrollbar-none"
+        style={{
+          height: "15rem",
+          maxHeight: "17rem",
+          caretColor: "white",
+        }}
       />
     </div>
   );

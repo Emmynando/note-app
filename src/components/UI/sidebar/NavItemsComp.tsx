@@ -28,7 +28,9 @@ export default function NavItems({ icon, text, count, href }: NavItemsProps) {
       )}
 
       {/* Display the count */}
-      <span className="flex items-center justify-center bg-[#383a3d] p-2 rounded-full w-8 h-8 text-center">
+      <span
+        className="flex items-center justify-center bg-[#383a3d] p-2 rounded-full size-[20px] text-center
+       text-xs">
         {count}
       </span>
     </div>

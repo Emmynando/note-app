@@ -16,7 +16,7 @@ export default function Sidebar({ onClick }: { onClick: () => void }) {
   }
 
   return (
-    <main className="absolute inset-0 z-40 bg-[#2f3136] w-[25%] h-dvh">
+    <main className="absolute inset-0 z-40 bg-[#2f3136] w-[15%] h-dvh">
       <Profile showList={showList} handleToggle={handleToggle} />
       <div
         className={clsx(
@@ -27,14 +27,12 @@ export default function Sidebar({ onClick }: { onClick: () => void }) {
         <WorkSpace />
         <Projects />
       </div>
-      <div
-        className="px-4 absolute shadow-custom w-full bottom-[5%] border-t border-gray-500
-      border-t-4">
+      <div className="px-4 absolute shadow-custom w-full bottom-[5%] bg-[#2f3136]">
         <div className="flex justify-between py-2">
           <button
             className="flex items-center gap-2 hover:text-priText text-base"
             onClick={onClick}>
-            <FiPlus />
+            <FiPlus className="size-18" />
             New List
           </button>
           <span className="flex items-center justify-center p-2 rounded-full size-8">

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-
-import "./globals.css";
+import localFont from "next/font/local";
 import IndexTask from "@/components/Layout/AddTask/IndexTask";
 import MainSideBar from "@/components/UI/MainSideBar";
 import { AddListProvider } from "@/store/AddListProvider";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Note App",
@@ -22,7 +22,7 @@ export default function RootLayout({
         <body className="overflow-hidden">
           <IndexTask />
           <div className="flex">
-            <aside className="w-[30%]">
+            <aside className="w-[20%]">
               <MainSideBar />
             </aside>
             <main className="flex-1">{children}</main>
