@@ -19,7 +19,8 @@ import {
 import { PiParagraph, PiCodeBlock } from "react-icons/pi";
 import { BsBlockquoteLeft } from "react-icons/bs";
 import { FaListOl, FaList } from "react-icons/fa6";
-const TextEditor = () => {
+
+const TextEditor = ({ taskbody, setTaskBody }) => {
   const editor = useEditor({
     extensions: [
       // Paragraph,
@@ -27,11 +28,7 @@ const TextEditor = () => {
       Document,
       StarterKit,
       Underline,
-      Paragraph.configure({
-        HTMLAttributes: {
-          class: "my-custom-paragraph",
-        },
-      }),
+
       Link.configure({
         openOnClick: true, // Links open in a new tab
         autolink: true, // Automatically convert URLs to links
@@ -40,7 +37,11 @@ const TextEditor = () => {
         placeholder: "Write here...",
       }),
     ],
-    content: "",
+    content: taskbody,
+    onUpdate: ({ editor }) => {
+      // Send the latest content to the parent component
+      setTaskBody(editor.getHTML());
+    },
   });
 
   if (!editor) return <div>Loading editor...</div>;

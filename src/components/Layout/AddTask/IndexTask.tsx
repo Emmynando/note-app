@@ -11,15 +11,54 @@ export default function IndexTask() {
   const [activeComponent, setActiveComponent] = useState<
     "General" | "Schedule" | "Remind"
   >("General");
+  const [category, setCategory] = useState("");
+  const [taskTitle, setTaskTitle] = useState("");
+  const [taskbody, setTaskBody] = useState("");
+  const [selectedRemindDates, setSelectedRemindDates] = useState<{
+    startDate: Date | null;
+    endDate: Date | null;
+  }>({ startDate: null, endDate: null });
+  const [selectedSchedileDates, setSelectedScheduleDates] = useState<{
+    startDate: Date | null;
+    endDate: Date | null;
+  }>({ startDate: null, endDate: null });
+
+  // for handle Reminder
+  const handleRemindDateChange = (dates: {
+    startDate: Date | null;
+    endDate: Date | null;
+  }) => {
+    setSelectedRemindDates(dates);
+  };
+  // for handle schedule
+  const handleScheduleDateChange = (dates: {
+    startDate: Date | null;
+    endDate: Date | null;
+  }) => {
+    setSelectedScheduleDates(dates);
+  };
+  const handleCategoryChange = (selectedCategory: string) => {
+    setCategory(selectedCategory);
+  };
 
   if (!showAddList) return null;
 
   const toggleComponent = (component: "General" | "Schedule" | "Remind") => {
     setActiveComponent(component);
-    console.log(activeComponent);
   };
+
+  async function handleSubmitTask() {
+    const taskData = {
+      title: taskTitle,
+      body: taskbody,
+      reminder: selectedRemindDates.startDate,
+      schedule: selectedSchedileDates,
+      category,
+    };
+    console.log(taskData);
+  }
+
   return (
-    // showAddList && (
     <main
       className="absolute z-50 flex items-center justify-center w-[100%] h-dvh 
     top-0 overflow-hidden bg-bgBlur">
@@ -29,12 +68,25 @@ export default function IndexTask() {
           handleRemind={() => toggleComponent("Remind")}
           handleSchedule={() => toggleComponent("Schedule")}
           activeComp={activeComponent}
+          handleAddTask={handleSubmitTask}
+          category={category}
+          onCategoryChange={handleCategoryChange}
         />
-        {activeComponent === "General" && <GeneralIndex />}
-        {activeComponent === "Remind" && <RemindMe />}
-        {activeComponent === "Schedule" && <Schedule />}
+        {activeComponent === "General" && (
+          <GeneralIndex
+            taskTitle={taskTitle}
+            setTaskTitle={setTaskTitle}
+            taskbody={taskbody}
+            setTaskBody={setTaskBody}
+          />
+        )}
+        {activeComponent === "Remind" && (
+          <RemindMe handleDateChange={handleRemindDateChange} />
+        )}
+        {activeComponent === "Schedule" && (
+          <Schedule handleDateChange={handleScheduleDateChange} />
+        )}
       </div>
     </main>
-    // )
   );
 }

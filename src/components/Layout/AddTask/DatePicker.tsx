@@ -13,16 +13,27 @@ interface DatePickerProps {
   children: ReactNode;
 }
 
-const DatePickerComp = () => {
+interface DatePickerCompProps {
+  onDateChange: (dates: {
+    startDate: Date | null;
+    endDate: Date | null;
+  }) => void;
+}
+
+const DatePickerComp = ({ onDateChange }: DatePickerCompProps) => {
   const selectedDate = new Date();
   const [startDate, setStartDate] = useState<Date | null>(
     setHours(setMinutes(new Date(), 30), 16)
   );
   const [endDate, setEndDate] = useState<Date | null>(null);
+
   const onChange = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
+
+    // Pass the updated dates to the parent via the callback
+    onDateChange({ startDate: start, endDate: end });
   };
 
   const MyContainer = ({ className, children }: DatePickerProps) => {
