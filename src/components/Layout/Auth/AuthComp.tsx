@@ -10,6 +10,7 @@ interface AuthProps {
   showPassword: boolean;
   setShowPassword: React.Dispatch<React.SetStateAction<boolean>>;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
 export default function AuthComp({
@@ -20,6 +21,7 @@ export default function AuthComp({
   showPassword,
   setShowPassword,
   onChange,
+  onSubmit,
 }: AuthProps) {
   return (
     <main className="fixed inset-0 flex items-center justify-center bg-inherit">
@@ -32,7 +34,7 @@ export default function AuthComp({
           Create Your Account
         </h2>
 
-        <form>
+        <form onSubmit={onSubmit} method="POST">
           <span>
             <label className="text-normal font-sm block leading-[24px] text-secFade">
               Username
@@ -112,7 +114,9 @@ export default function AuthComp({
             </span>
           </span>
 
-          <button className="w-full h-[3rem] rounded-[32px] bg-[#2f3136] py-2 font-golos text-white mb-auto">
+          <button
+            className="w-full h-[3rem] rounded-[32px] bg-[#2f3136] py-2 font-golos text-white mb-auto"
+            type="submit">
             Create Your Account
           </button>
         </form>

@@ -1,10 +1,12 @@
 "use client";
 import { useState } from "react";
-
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa6";
+import { api } from "@/API/baseUrl";
+import { useRouter } from "next/navigation";
 
-export default function AuthComp() {
+export default function Login() {
+  const router = useRouter();
   const [loginDeets, setLoginDeets] = useState({
     email: "",
     password: "",
@@ -18,6 +20,45 @@ export default function AuthComp() {
       [name]: value,
     }));
   }
+
+  async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!loginDeets.email || loginDeets.password.length < 2) {
+      console.log("invalid Details");
+      return;
+    }
+
+    // Regular expression to check if input is an email
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(loginDeets.email);
+
+    try {
+      const result = await fetch(`${api}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          // Use email if valid, else username
+          [isEmail ? "email" : "username"]: loginDeets.email,
+          password: loginDeets.password,
+        }),
+      });
+      if (!result.ok) {
+        throw new Error("Login Failed");
+      }
+      const data = await result.json();
+      const { userId } = data;
+      console.log(data);
+      // Store userId in localStorage
+      localStorage.setItem("userId", userId);
+      if (userId) {
+        router.replace("/");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
   return (
     <main className="fixed inset-0 flex items-center justify-center bg-inherit">
       <section className="h-[95%] w-[35.7rem] rounded-2xl bg-white px-[2.5rem] py-[2rem]">
@@ -25,7 +66,7 @@ export default function AuthComp() {
           Login Your Account
         </h2>
 
-        <form>
+        <form onSubmit={handleLogin} method="POST">
           <span>
             <label className="text-normal font-sm block leading-[24px] text-secFade mt-[10%]">
               Username/email
@@ -66,7 +107,10 @@ export default function AuthComp() {
             </span>
           </span>
 
-          <button className="w-full h-[3rem] rounded-[32px] bg-[#2f3136] py-2 font-golos text-white mt-[20%]">
+          <button
+            type="submit"
+            className="w-full h-[3rem] rounded-[32px] bg-[#2f3136] 
+          py-2 font-golos text-white mt-[20%]">
             Login
           </button>
         </form>
@@ -80,3 +124,21 @@ export default function AuthComp() {
     </main>
   );
 }
+
+// const refreshAccessToken = async () => {
+//   const res = await fetch(`${api}/refresh`, { method: "POST", credentials: "include" });
+//   const data = await res.json();
+//   if (res.ok) {
+//     localStorage.setItem("accessToken", data.accessToken);
+//   }
+// };
+
+// export const handleLogout = (req: Request, res: Response) => {
+//   res.clearCookie("refreshToken", {
+//     httpOnly: true,
+//     secure: true,
+//     sameSite: "Strict",
+//   });
+
+//   res.status(200).json({ message: "Logged out successfully" });
+// };

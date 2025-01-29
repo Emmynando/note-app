@@ -1,9 +1,10 @@
 "use client";
 import AuthComp from "@/components/Layout/Auth/AuthComp";
 import { useState } from "react";
+import { api } from "@/API/baseUrl";
 
 export default function Login() {
-  const [loginDeets, setLoginDeets] = useState({
+  const [signupDeets, setSignupDeets] = useState({
     email: "",
     password: "",
     confirmPassword: "",
@@ -13,22 +14,62 @@ export default function Login() {
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
-    setLoginDeets((prevDeets) => ({
+    setSignupDeets((prevDeets) => ({
       ...prevDeets,
       [name]: value,
     }));
   }
 
+  async function handleSignup(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (signupDeets.password !== signupDeets.confirmPassword) {
+      console.log("Password do not match");
+      return;
+    }
+
+    if (
+      !signupDeets.email ||
+      signupDeets.password.length < 2 ||
+      signupDeets.username.length < 2
+    ) {
+      console.log("invalid Details");
+      return;
+    }
+
+    try {
+      const result = await fetch(`${api}/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: signupDeets.email,
+          username: signupDeets.username,
+          password: signupDeets.password,
+        }),
+      });
+      if (!result.ok) {
+        throw new Error("Login Failed");
+      }
+      const data = await result.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
   return (
     <main>
       <AuthComp
-        email={loginDeets.email}
-        username={loginDeets.username}
-        password={loginDeets.password}
-        confirmPassword={loginDeets.confirmPassword}
+        email={signupDeets.email}
+        username={signupDeets.username}
+        password={signupDeets.password}
+        confirmPassword={signupDeets.confirmPassword}
         showPassword={showPassword}
         setShowPassword={setShowPassword}
         onChange={handleChange}
+        onSubmit={handleSignup}
       />
     </main>
   );
