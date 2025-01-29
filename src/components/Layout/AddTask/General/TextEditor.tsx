@@ -3,8 +3,6 @@ import React from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import Document from "@tiptap/extension-document";
 import StarterKit from "@tiptap/starter-kit";
-import Paragraph from "@tiptap/extension-paragraph";
-import Blockquote from "@tiptap/extension-blockquote";
 
 import Link from "@tiptap/extension-link";
 import Underline from "@tiptap/extension-underline";

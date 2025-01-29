@@ -4,7 +4,6 @@ import { BsThreeDots } from "react-icons/bs";
 import { IoIosAdd } from "react-icons/io";
 import { useTask } from "@/store/AddListProvider";
 import clsx from "clsx";
-import Category from "./Category";
 
 const CATEGORIES = ["Project", "Appointment", "Tasks", "Notes", "Others"];
 

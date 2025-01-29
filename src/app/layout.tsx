@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import IndexTask from "@/components/Layout/AddTask/IndexTask";
 import MainSideBar from "@/components/UI/MainSideBar";
 import { AddListProvider } from "@/store/AddListProvider";
