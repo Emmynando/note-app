@@ -38,17 +38,5 @@ const taskSlice = createSlice({
   },
 });
 
-// Configure the Redux store
-const store = configureStore({
-  reducer: {
-    task: taskSlice.reducer,
-  },
-});
-
-// Export types for state and dispatch
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
-
-// Export the actions and store
 export const { addTask, updateTask, clearTask } = taskSlice.actions;
-export { store };
+export default taskSlice.reducer;

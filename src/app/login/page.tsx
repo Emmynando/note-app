@@ -4,8 +4,12 @@ import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa6";
 import { api } from "@/API/baseUrl";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "@/store/UserReducer";
 
 export default function Login() {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [loginDeets, setLoginDeets] = useState({
     email: "",
@@ -47,11 +51,14 @@ export default function Login() {
         throw new Error("Login Failed");
       }
       const data = await result.json();
-      const { userId } = data;
-      console.log(data);
+      const { id, accessToken } = data;
+
       // Store userId in localStorage
-      localStorage.setItem("userId", userId);
-      if (userId) {
+      localStorage.setItem("userId", id);
+      localStorage.setItem("userToken", accessToken);
+      if (id) {
+        toast.success("Login Successful");
+        dispatch(setUserInfo({ userId: id, userToken: accessToken }));
         router.replace("/");
       }
     } catch (error) {

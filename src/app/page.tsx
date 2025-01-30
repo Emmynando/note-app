@@ -1,5 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "@/store/UserReducer";
 import DayCard from "@/components/Layout/MyApp/DayCard";
 import DayHeader from "@/components/UI/Header";
 import { MdOutlineAccessAlarms } from "react-icons/md";
@@ -10,10 +12,20 @@ import wand from "../../public/svg/wand.svg";
 import SvgViewer from "@/components/UI/SVGViewer";
 
 export default function Home() {
+  const dispatch = useDispatch();
   const [showPrevious, setShowPrevious] = useState(true);
   const [showToday, setShowToday] = useState(true);
   const [showUpcoming, setShowUpcoming] = useState(true);
   const [showDeet, setShowDeet] = useState(false);
+
+  useEffect(() => {
+    const savedUserId = localStorage.getItem("userId");
+    const savedUserToken = localStorage.getItem("userToken");
+    if (savedUserId && savedUserToken) {
+      dispatch(setUserInfo({ userId: savedUserId, userToken: savedUserToken }));
+    }
+  }, [dispatch]);
+
   function toggleDeets() {
     setShowDeet((prevState) => !prevState);
   }
