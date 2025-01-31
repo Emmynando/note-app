@@ -9,6 +9,8 @@ import { api } from "@/API/baseUrl";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { fetchWithToken } from "@/API/RequestWrapper";
+import { useDispatch } from "react-redux";
 
 interface DateProps {
   startDate: Date | null;
@@ -16,6 +18,7 @@ interface DateProps {
 }
 
 export default function IndexTask() {
+  const dispatch = useDispatch();
   const userId = useSelector((state: RootState) => state.user.userId);
   const userToken = useSelector((state: RootState) => state.user.userToken);
   const { showAddList } = useTask();
@@ -121,35 +124,55 @@ export default function IndexTask() {
         toast.error("Reminder Cannot be after event");
       }
     }
-    console.log(taskData);
 
     try {
       if (!userId || !userToken) {
         console.log("user not found");
         return;
       }
-      const response = await fetch(`${api}/task/${userId}`, {
-        method: "POST",
-        body: JSON.stringify({
-          task_title: taskTitle,
-          task_body: taskbody,
-          reminder: selectedRemindDates.startDate?.toISOString(),
-          scheduleStart: selectedScheduleDates.startDate?.toISOString(),
-          scheduleEnd: selectedScheduleDates.endDate?.toISOString(),
-          taskCategory: category,
-        }),
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userToken}`,
+      // const response = await fetch(`${api}/task/${userId}`, {
+      //   method: "POST",
+      //   body: JSON.stringify({
+      //     task_title: taskTitle,
+      //     task_body: taskbody,
+      //     reminder: selectedRemindDates.startDate?.toISOString(),
+      //     scheduleStart: selectedScheduleDates.startDate?.toISOString(),
+      //     scheduleEnd: selectedScheduleDates.endDate?.toISOString(),
+      //     taskCategory: category,
+      //   }),
+      //   credentials: "include",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${userToken}`,
+      //   },
+      // });
+
+      const response = await fetchWithToken(
+        `${api}/task/${userId}`,
+        {
+          method: "POST",
+          body: JSON.stringify(taskData),
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      });
-      if (!response.ok) {
+        userToken,
+        dispatch
+      );
+
+      // if (response?.ok) {
+
+      //   console.log("Task saved:", data);
+      // } else {
+      //   console.error("Failed to save task");
+      // }
+      if (!response?.ok) {
         console.log(response);
       }
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
+      toast.success("Successfull");
+      // console.log(data);
+    } catch {
       toast.error("server Error");
     }
   }

@@ -21,7 +21,6 @@ const userSlice = createSlice({
       action: PayloadAction<{ userId: string; userToken: string }>
     ) => {
       // console.log("Setting userId:", action.payload.userToken),
-      action.payload.userToken;
       state.userId = action.payload.userId;
       state.userToken = action.payload.userToken;
     },
