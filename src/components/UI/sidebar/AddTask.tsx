@@ -1,9 +1,52 @@
 import { FiPlus } from "react-icons/fi";
-import { navCalander } from "../../constant";
 import NavItems from "./NavItemsComp";
 import { FiSearch } from "react-icons/fi";
 
+import { LuCalendarDays } from "react-icons/lu";
+import { MdOutlineWbSunny } from "react-icons/md";
+import { PiHashStraightBold } from "react-icons/pi";
+import { useGetTasksQuery } from "@/store/taskApi";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+
+import { filterTaskCount, filterTodayTaskCount } from "@/utils/helpers";
+
 export default function AddTask() {
+  const userId = useSelector((state: RootState) => state.user.userId);
+  const {
+    data: tasksResponse,
+    isLoading,
+    error,
+  } = useGetTasksQuery(userId as string, {
+    // Don't fetch if userId is missing
+    skip: !userId,
+  });
+
+  if (error) {
+    console.log("Error Fetching Task:", error);
+  }
+
+  const tasks = tasksResponse?.data || [];
+  const appointmentCount = filterTaskCount(tasks, "Appointment");
+  const todaysTaskCount = filterTodayTaskCount(tasks);
+
+  const navCalander = [
+    {
+      id: "1",
+      icon: MdOutlineWbSunny,
+      text: "My Day",
+      count: isLoading ? 0 : todaysTaskCount,
+      href: "/",
+    },
+    {
+      id: "2",
+      icon: LuCalendarDays,
+      text: "Calender",
+      count: isLoading ? 0 : appointmentCount,
+      href: "/calendar",
+    },
+  ];
+
   return (
     <main className="container border-b border-gray-500">
       <button className="flex items-center gap-4 text-priText text-xl my-4">

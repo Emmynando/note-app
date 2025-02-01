@@ -14,7 +14,7 @@ export const navCalander = [
     icon: MdOutlineWbSunny,
     text: "My Day",
     count: "0",
-    href: "/",
+    href: "/myday",
   },
   {
     id: "2",
