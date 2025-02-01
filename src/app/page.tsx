@@ -15,8 +15,10 @@ import ProgressBar from "@/components/Layout/MyApp/PogressBar";
 import wand from "../../public/svg/wand.svg";
 import SvgViewer from "@/components/UI/SVGViewer";
 import { useGetTasksQuery } from "@/store/taskApi";
+import SingleDayCard from "@/components/Layout/MyApp/SingleDayCard";
 
 export default function Home() {
+  const today = new Date();
   const dispatch = useDispatch();
   const userId = useSelector((state: RootState) => state.user.userId);
   const userToken = useSelector((state: RootState) => state.user.userToken);
@@ -49,14 +51,6 @@ export default function Home() {
   }
 
   const tasks = tasksResponse?.data || [];
-
-  // const response = await fetchWithToken(
-  //   `${api}/task/${userId}`,
-  //   { method: "GET" },
-  //   userToken,
-  //   dispatch
-  // );
-
   function toggleDeets() {
     setShowDeet((prevState) => !prevState);
   }
@@ -77,60 +71,77 @@ export default function Home() {
       );
     });
 
-  console.log(todaysTasks);
+  // Get the most recent past task
+  const pastTasks = tasks
+    // Remove tasks with undefined scheduleStart
+    ?.filter((task) => task.scheduleStart)
+    // Convert to Date safely
+    .map((task) => ({ ...task, scheduleStart: new Date(task.scheduleStart!) }))
+    // Ensure it's a past task
+    .filter((task) => task.scheduleStart < today)
+    // Sort by most recent first
+    .sort((a, b) => b.scheduleStart.getTime() - a.scheduleStart.getTime());
+
+  const recentPastTask = pastTasks.length > 0 ? pastTasks[0] : null;
+
+  // Get upcoming task
+  const upcomingTasks = tasks
+    ?.filter((task) => task.scheduleStart)
+    .map((task) => ({ ...task, scheduleStart: new Date(task.scheduleStart!) }))
+    .filter((task) => task.scheduleStart > today)
+    .sort((a, b) => b.scheduleStart.getTime() - a.scheduleStart.getTime());
+
+  const upComingTask = upcomingTasks.length > 0 ? upcomingTasks[0] : null;
 
   return (
     <main>
       <DayHeader crumb="My Day" />
-      <DayCard
-        showCard={showPrevious}
-        setShowCard={setShowPrevious}
-        toggleDeets={() => ""}
-        showDeet={false}
-        mainText="Overdue"
-        header="Call Jason"
-        theDay="Yesterday"
-        dayAlarm={<LuCalendarDays />}
-        bodyText="Email Mrs. James for the new intern we have next week from Alex
-                Carter, a marketing student from Brookfield University. Confirm
-                their start date, schedu..."
-      />
-      <div>
-        {todaysTasks && todaysTasks?.length > 0 ? (
-          todaysTasks.map((task) => (
-            <DayCard
-              setShowCard={setShowToday}
-              showCard={showToday}
-              toogleDeetButton={<IoIosArrowDown />}
-              toogleDeetButtonTwo={<IoIosArrowUp />}
-              showDeet={showDeet}
-              toggleDeets={toggleDeets}
-              todayDate={task.scheduleStart}
-              mainText="Today"
-              header={task.task_title}
-              theDay="Today"
-              dayAlarm={<MdOutlineAccessAlarms />}
-              bodyText={task.task_body}
-            />
-          ))
+      <div className="overflow-y-scroll h-[80dvh] hide-scrollbar">
+        {recentPastTask ? (
+          <SingleDayCard
+            showCard={showPrevious}
+            setShowCard={setShowPrevious}
+            toggleDeets={() => ""}
+            showDeet={false}
+            mainText="Overdue"
+            header={recentPastTask.task_title}
+            theDay="Yesterday"
+            dayAlarm={<LuCalendarDays />}
+            bodyText={recentPastTask.task_body}
+          />
         ) : (
-          <p>No tasks for today.</p>
+          <p className="font-medium text-base text-priFont ml-[1rem]">
+            No past events
+          </p>
         )}
-        {showToday && <ProgressBar />}
+
+        <DayCard
+          setShowCard={setShowToday}
+          showCard={showToday}
+          toogleDeetButton={<IoIosArrowDown />}
+          toogleDeetButtonTwo={<IoIosArrowUp />}
+          showDeet={showDeet}
+          toggleDeets={toggleDeets}
+          mainText="Today"
+          theDay="Today"
+          dayAlarm={<MdOutlineAccessAlarms />}
+          // bodyText={task.task_body}
+          arrayTask={todaysTasks}
+        />
+        {upComingTask && (
+          <SingleDayCard
+            setShowCard={setShowUpcoming}
+            showCard={showUpcoming}
+            showDeet={false}
+            toggleDeets={toggleDeets}
+            mainText="Upcoming"
+            header={upComingTask.task_title}
+            theDay="Tomorrow"
+            dayAlarm={<SvgViewer svgFile={wand} className="size-4" />}
+            bodyText={upComingTask.task_body}
+          />
+        )}
       </div>
-      <DayCard
-        setShowCard={setShowUpcoming}
-        showCard={showUpcoming}
-        showDeet={false}
-        toggleDeets={toggleDeets}
-        mainText="Upcoming"
-        header="Black Friday"
-        theDay="Tomorrow"
-        dayAlarm={<SvgViewer svgFile={wand} className="size-4" />}
-        bodyText="Email Mrs. James for the new intern we have next week from Alex
-                Carter, a marketing student from Brookfield University. Confirm
-                their start date, schedu..."
-      />
     </main>
   );
 }

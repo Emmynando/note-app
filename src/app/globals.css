@@ -68,6 +68,14 @@ label,
 input {
   display: block;
 }
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 @layer base {
   @font-face {
     font-family: "gabarito";
