@@ -18,6 +18,7 @@ export async function fetchWithToken(
   // Try the request with the current access token
   let response = await fetch(url, {
     ...options,
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
       // Include access token in Authorization header
@@ -29,10 +30,10 @@ export async function fetchWithToken(
   if (response.status === 401) {
     const refreshedData = await refreshAccessToken(); // Get new token
 
-    // If refresh fails, force logout
+    // If refresh fails, clear storage and redirect
     if (
       !refreshedData ||
-      !refreshedData.newAccessToken ||
+      !refreshedData?.newAccessToken ||
       !refreshedData.userId
     ) {
       // If refresh fails, force logout
@@ -42,7 +43,6 @@ export async function fetchWithToken(
       return;
     }
 
-    // Unauthorized, meaning token has expired
     const { newAccessToken, userId } = refreshedData;
 
     if (accessToken) {
@@ -54,6 +54,7 @@ export async function fetchWithToken(
       // Retry the request with the new access token
       response = await fetch(url, {
         ...options,
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${newAccessToken}`, // Use new access token
@@ -64,29 +65,3 @@ export async function fetchWithToken(
 
   return response;
 }
-
-// import { useDispatch, useSelector } from "react-redux";
-// import { fetchWithToken } from "./fetchWithToken";
-// import { RootState } from "@/store/store";
-// import { api } from "./baseUrl";
-
-// async function handleSubmitTask(taskData: any) {
-//   const dispatch = useDispatch();
-//   const accessToken = useSelector((state: RootState) => state.user.userToken);
-
-//   const response = await fetchWithToken(`${api}/task`, {
-//     method: "POST",
-//     body: JSON.stringify(taskData),
-//     credentials: "include",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   }, accessToken, dispatch);
-
-//   if (response?.ok) {
-//     const data = await response.json();
-//     console.log("Task saved:", data);
-//   } else {
-//     console.error("Failed to save task");
-//   }
-// }

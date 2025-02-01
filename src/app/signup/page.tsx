@@ -1,7 +1,7 @@
 "use client";
 import AuthComp from "@/components/Layout/Auth/AuthComp";
 import { useState } from "react";
-import { api } from "@/API/baseUrl";
+import { api } from "@/utils/baseUrl";
 
 export default function Login() {
   const [signupDeets, setSignupDeets] = useState({

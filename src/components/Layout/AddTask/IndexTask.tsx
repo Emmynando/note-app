@@ -5,11 +5,11 @@ import Schedule from "./Schedule";
 import GeneralIndex from "./General";
 import TaskHeader from "./TaskHeader";
 import RemindMe from "./Remind";
-import { api } from "@/API/baseUrl";
+import { api } from "@/utils/baseUrl";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { fetchWithToken } from "@/API/RequestWrapper";
+import { fetchWithToken } from "@/utils/RequestWrapper";
 import { useDispatch } from "react-redux";
 
 interface DateProps {

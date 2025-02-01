@@ -127,7 +127,7 @@ export default function DayCard({
                   <TiStarFullOutline />
                 )}
               </p>
-              <p className="font-medium text-prifont">{dayAlarm}</p>
+              <div className="font-medium text-prifont">{dayAlarm}</div>
             </div>
           </section>
         </div>

@@ -8,7 +8,7 @@ type SvgViewerProps = {
 
 const SvgViewer: React.FC<SvgViewerProps> = ({ svgFile, className }) => {
   return (
-    <div className={`inline-svg `} role="img" aria-label={"note app"}>
+    <span className={`inline-svg `} role="img" aria-label={"note app"}>
       <Image
         src={svgFile}
         width={0}
@@ -16,7 +16,7 @@ const SvgViewer: React.FC<SvgViewerProps> = ({ svgFile, className }) => {
         alt="note app"
         className={className}
       />
-    </div>
+    </span>
   );
 };
 

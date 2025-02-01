@@ -2,41 +2,57 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Task {
   id: string;
-  title: string;
-  body: string;
+  task_title: string;
+  task_body: string;
   reminder?: string;
-  schedule?: string;
-  category?: string;
+  scheduleStart?: string;
+  scheduleEnd?: string;
+  taskCategory?: string;
+  userId?: string;
 }
 
 interface TaskState {
-  task: Task | null;
+  tasks: Task[];
 }
 
 const initialState: TaskState = {
-  task: null,
+  tasks: [],
 };
+
 const taskSlice = createSlice({
   name: "task",
   initialState,
   reducers: {
-    // Add a task to the array
-    addTask: (state, action: PayloadAction<Task>) => {
-      state.task = action.payload;
+    // Add multiple tasks to state
+    setTasks: (state, action: PayloadAction<Task[]>) => {
+      state.tasks = action.payload;
     },
-    // Update a task in the array
-    // Update fields of the task
-    updateTask: (state, action: PayloadAction<Partial<Task>>) => {
-      if (state.task) {
-        state.task = { ...state.task, ...action.payload };
+    // Add a single task to the array
+    addTask: (state, action: PayloadAction<Task>) => {
+      state.tasks.push(action.payload);
+    },
+    // Update a task by id
+    updateTask: (
+      state,
+      action: PayloadAction<{ id: string; data: Partial<Task> }>
+    ) => {
+      const { id, data } = action.payload;
+      const index = state.tasks.findIndex((task) => task.id === id);
+      if (index !== -1) {
+        state.tasks[index] = { ...state.tasks[index], ...data };
       }
     },
-    // Clear the task (reset to null)
-    clearTask: (state) => {
-      state.task = null;
+    // Remove a task by id
+    removeTask: (state, action: PayloadAction<string>) => {
+      state.tasks = state.tasks.filter((task) => task.id !== action.payload);
+    },
+    // Clear all tasks
+    clearTasks: (state) => {
+      state.tasks = [];
     },
   },
 });
 
-export const { addTask, updateTask, clearTask } = taskSlice.actions;
+export const { setTasks, addTask, updateTask, removeTask, clearTasks } =
+  taskSlice.actions;
 export default taskSlice.reducer;

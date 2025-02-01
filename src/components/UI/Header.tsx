@@ -33,9 +33,9 @@ export default function DayHeader({ crumb }: { crumb: string }) {
           <p className="font-semibold text-[28px] text-fadeWhite">{time}</p>
         </div>
         <div className="flex items-start gap-2 pt-[1rem]">
-          <p className="font-semibold text-[#e0e0e0] text-[21px]">
+          <div className="font-semibold text-[#e0e0e0] text-[21px]">
             <SvgViewer svgFile={menuIcon} className="size-6" />
-          </p>
+          </div>
           <p className="font-semibold text-[#e0e0e0] text-[21px]">
             <HiOutlineLightBulb />
           </p>
