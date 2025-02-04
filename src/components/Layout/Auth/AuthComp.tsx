@@ -1,6 +1,7 @@
 "use client";
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa6";
+import Link from "next/link";
 
 interface AuthProps {
   username: string;
@@ -36,7 +37,7 @@ export default function AuthComp({
 
         <form onSubmit={onSubmit} method="POST">
           <span>
-            <label className="text-normal font-sm block leading-[24px] text-secFade">
+            <label className="text-normal font-sm block leading-[24px] text-[#2f3136]">
               Username
             </label>
             <input
@@ -49,8 +50,8 @@ export default function AuthComp({
             />
           </span>
           <span>
-            <label className="text-normal font-sm block leading-[24px] text-secFade">
-              Email Address
+            <label className="text-normal font-sm block leading-[24px] text-[#2f3136]">
+              Email
             </label>
             <input
               type="email"
@@ -63,7 +64,7 @@ export default function AuthComp({
           </span>
 
           <span className="relative">
-            <label className="text-normal font-sm block leading-[24px] text-secFade">
+            <label className="text-normal font-sm block leading-[24px] text-[#2f3136]">
               Password
             </label>
             <span className="flex w-full">
@@ -89,7 +90,7 @@ export default function AuthComp({
           </span>
 
           <span className="relative">
-            <label className="text-normal font-sm block leading-[24px] text-secFade">
+            <label className="text-normal font-sm block leading-[24px] text-[#2f3136]">
               Confirm Password
             </label>
             <span className="flex w-full">
@@ -120,12 +121,12 @@ export default function AuthComp({
             Create Your Account
           </button>
         </form>
-        {/* <p className="mt-1 text-center text-sm ">
+        <p className="mt-1 text-center text-sm text-[#2f3136]">
           Already have an account?{" "}
-          <Link href="" className="text-[#00B4FF]">
+          <Link href="/login" className="text-[#00B4FF]">
             Login
           </Link>
-        </p> */}
+        </p>
       </section>
     </main>
   );

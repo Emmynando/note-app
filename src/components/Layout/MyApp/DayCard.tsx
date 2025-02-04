@@ -5,6 +5,7 @@ import { TiStarOutline, TiStarFullOutline } from "react-icons/ti";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap/all";
 import { Flip } from "gsap/all";
+import { formatDayMonth } from "@/utils/helpers";
 import clsx from "clsx";
 
 gsap.registerPlugin(Flip);
@@ -14,12 +15,12 @@ interface Task {
   task_title: string;
   task_body: string;
   scheduleStart?: string;
+  taskCategory?: string;
 }
 
 interface DayCardProps {
   mainText: string;
   theDay: string;
-  // todayDate?: string;
   dayAlarm: ReactNode;
   toogleDeetButton?: ReactNode;
   toogleDeetButtonTwo?: ReactNode;
@@ -119,10 +120,12 @@ export default function DayCard({
                         "text-xs font-medium text-[#EF4444]",
                         theDay !== "Yesterday" && "!text-[#FF7C66]"
                       )}>
-                      {task.scheduleStart}
+                      {task.scheduleStart && formatDayMonth(task.scheduleStart)}
                     </p>
                     <span className="size-2 rounded-full bg-secFade" />
-                    <p className="text-xs font-medium text-secFade">Task</p>
+                    <p className="text-xs font-medium text-secFade">
+                      {task.taskCategory}
+                    </p>
                   </div>
 
                   <div className="flex items-center gap-4">

@@ -35,6 +35,8 @@ export default function Sidebar({ onClick }: { onClick: () => void }) {
 
   const tasks = tasksResponse?.data || [];
 
+  
+
   return (
     <main className="absolute inset-0 z-40 bg-[#2f3136] w-[15%] h-dvh">
       <Profile showList={showList} handleToggle={handleToggle} />
@@ -43,7 +45,7 @@ export default function Sidebar({ onClick }: { onClick: () => void }) {
           "scrollbar-custom overflow-y-scroll scroll-smooth",
           showList ? "h-[60%]" : "h-[75%]"
         )}>
-        <AddTask count="0" />
+        <AddTask/>
         <WorkSpace />
         <Projects />
       </div>

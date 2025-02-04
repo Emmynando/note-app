@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa6";
@@ -16,6 +17,7 @@ export default function Login() {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
@@ -28,7 +30,7 @@ export default function Login() {
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!loginDeets.email || loginDeets.password.length < 2) {
-      console.log("invalid Details");
+      toast.error("Invalid Details");
       return;
     }
 
@@ -36,6 +38,7 @@ export default function Login() {
     const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(loginDeets.email);
 
     try {
+      setLoading(true);
       const result = await fetch(`${api}/auth/login`, {
         method: "POST",
         headers: {
@@ -48,7 +51,12 @@ export default function Login() {
         }),
       });
       if (!result.ok) {
-        throw new Error("Login Failed");
+        toast.error("Authentcation Failed");
+        setLoginDeets({
+          email: "",
+          password: "",
+        });
+        return;
       }
       const data = await result.json();
       const { id, accessToken } = data;
@@ -62,7 +70,13 @@ export default function Login() {
         router.replace("/");
       }
     } catch (error) {
-      console.error("Error:", error);
+      toast.error("Server Error");
+      setLoginDeets({
+        email: "",
+        password: "",
+      });
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -75,31 +89,39 @@ export default function Login() {
 
         <form onSubmit={handleLogin} method="POST">
           <span>
-            <label className="text-normal font-sm block leading-[24px] text-secFade mt-[10%]">
+            <label
+              htmlFor="email"
+              className="text-normal font-sm block leading-[24px] text-[#2f3136] mt-[10%]">
               Username/email
             </label>
             <input
+              id="email"
               type="text"
               name="email"
               value={loginDeets.email}
               onChange={handleChange}
               className="mb-[0.5rem] h-[3rem] w-full rounded-[32px] border 
               border-[#e1e1e1] px-2 pl-4 outline-none text-[#2f3136]"
+              required
             />
           </span>
 
           <span className="relative">
-            <label className="text-normal font-sm block leading-[24px] text-secFade">
+            <label
+              htmlFor="password"
+              className="text-normal font-sm block leading-[24px] text-[#2f3136]">
               Password
             </label>
             <span className="flex w-full">
               <input
+                id="password"
                 type={showPassword ? "text" : "password"}
                 name="password"
                 value={loginDeets.password}
                 onChange={handleChange}
                 className="mb-[0.5rem] h-[3rem] text-[#2f3136] w-[95%] rounded-s-[32px] border 
                 border-r-0 border-[#e1e1e1] px-2 pl-4 outline-none"
+                required
               />
               <button
                 type="button"
@@ -118,15 +140,15 @@ export default function Login() {
             type="submit"
             className="w-full h-[3rem] rounded-[32px] bg-[#2f3136] 
           py-2 font-golos text-white mt-[20%]">
-            Login
+            {!loading ? "Login" : "Loading"}
           </button>
         </form>
-        {/* <p className="mt-1 text-center text-sm ">
-          Already have an account?{" "}
-          <Link href="" className="text-[#00B4FF]">
-            Login
+        <p className="mt-1 text-center text-sm text-[#2f3136]">
+          New User?{" "}
+          <Link href="/signup" className="text-[#00B4FF]">
+            SignUp
           </Link>
-        </p> */}
+        </p>
       </section>
     </main>
   );

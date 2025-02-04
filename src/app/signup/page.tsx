@@ -3,7 +3,7 @@ import AuthComp from "@/components/Layout/Auth/AuthComp";
 import { useState } from "react";
 import { api } from "@/utils/baseUrl";
 
-export default function Login() {
+export default function Signup() {
   const [signupDeets, setSignupDeets] = useState({
     email: "",
     password: "",

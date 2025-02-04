@@ -13,10 +13,14 @@ import wand from "../../public/svg/wand.svg";
 import SvgViewer from "@/components/UI/SVGViewer";
 import { useGetTasksQuery } from "@/store/taskApi";
 import SingleDayCard from "@/components/Layout/MyApp/SingleDayCard";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
 
 export default function Home() {
   const today = new Date();
   const dispatch = useDispatch();
+  TimeAgo.addDefaultLocale(en);
+  const timeAgo = new TimeAgo("en-US");
   const userId = useSelector((state: RootState) => state.user.userId);
   const [showPrevious, setShowPrevious] = useState(true);
   const [showToday, setShowToday] = useState(true);
@@ -104,6 +108,7 @@ export default function Home() {
             theDay="Yesterday"
             dayAlarm={<LuCalendarDays />}
             bodyText={recentPastTask.task_body}
+            taskCategory={recentPastTask.taskCategory}
           />
         ) : (
           <p className="font-medium text-base text-priFont ml-[1rem]">
@@ -121,7 +126,6 @@ export default function Home() {
           mainText="Today"
           theDay="Today"
           dayAlarm={<MdOutlineAccessAlarms />}
-          // bodyText={task.task_body}
           arrayTask={todaysTasks}
         />
         {upComingTask && (
@@ -132,9 +136,10 @@ export default function Home() {
             toggleDeets={toggleDeets}
             mainText="Upcoming"
             header={upComingTask.task_title}
-            theDay="Tomorrow"
+            theDay={timeAgo.format(upComingTask.scheduleStart)}
             dayAlarm={<SvgViewer svgFile={wand} className="size-4" />}
             bodyText={upComingTask.task_body}
+            taskCategory={upComingTask.taskCategory}
           />
         )}
       </div>

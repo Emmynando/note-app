@@ -8,10 +8,12 @@ import { PiHashStraightBold } from "react-icons/pi";
 import { useGetTasksQuery } from "@/store/taskApi";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { useTask } from "@/store/AddListProvider";
 
 import { filterTaskCount, filterTodayTaskCount } from "@/utils/helpers";
 
 export default function AddTask() {
+  const { openAddListModal } = useTask();
   const userId = useSelector((state: RootState) => state.user.userId);
   const {
     data: tasksResponse,
@@ -49,7 +51,9 @@ export default function AddTask() {
 
   return (
     <main className="container border-b border-gray-500">
-      <button className="flex items-center gap-4 text-priText text-xl my-4">
+      <button
+        className="flex items-center gap-4 text-priText text-xl my-4"
+        onClick={openAddListModal}>
         <FiPlus /> Add Task
       </button>
       <div className="relative w-full max-w-md mb-2">

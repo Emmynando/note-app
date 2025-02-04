@@ -19,12 +19,12 @@ export default function AllScreen() {
         toggleDeets={() => ""}
         showDeet={false}
         mainText="Overdue"
-        header="Call Jason"
+        // header="Call Jason"
         theDay="Yesterday"
         dayAlarm={<LuCalendarDays />}
-        bodyText="Email Mrs. James for the new intern we have next week from Alex
-      Carter, a marketing student from Brookfield University. Confirm
-      their start date, schedu..."
+        //   bodyText="Email Mrs. James for the new intern we have next week from Alex
+        // Carter, a marketing student from Brookfield University. Confirm
+        // their start date, schedu..."
       />
       <section>
         <div className="flex gap-2 mb-2 pl-2">

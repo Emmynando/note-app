@@ -53,7 +53,7 @@ export default function Profile({ showList, handleToggle }: ProfileProps) {
               alt="note"
             />
           </span>
-          <p className="mr-4">Emmy</p>
+          <p className="mr-4">Emnotes</p>
           <button className="h-max" onClick={handleToggle}>
             {showList ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </button>

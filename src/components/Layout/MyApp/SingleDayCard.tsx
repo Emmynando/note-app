@@ -15,6 +15,7 @@ interface DayCardProps {
   header: string;
   theDay: string;
   todayDate?: string;
+  taskCategory?: string;
   dayAlarm: ReactNode;
   toogleDeetButton?: ReactNode;
   toogleDeetButtonTwo?: ReactNode;
@@ -30,6 +31,7 @@ export default function SingleDayCard({
   todayDate,
   bodyText,
   showDeet,
+  taskCategory,
   toggleDeets,
   toogleDeetButton,
   toogleDeetButtonTwo,
@@ -113,7 +115,10 @@ export default function SingleDayCard({
                 {todayDate}
               </p>
               <span className="size-2 rounded-full bg-secFade" />
-              <p className="text-xs font-medium text-secFade"> Tasks</p>
+              <p className="text-xs font-medium text-secFade">
+                {" "}
+                {taskCategory}
+              </p>
             </div>
             <div className="flex items-center gap-4 ">
               <p
