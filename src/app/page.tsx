@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "@/store/UserReducer";
 import DayCard from "@/components/Layout/MyApp/DayCard";
+import TimeAgo from "javascript-time-ago";
 import { useSelector } from "react-redux";
 import { MdOutlineAccessAlarms } from "react-icons/md";
 import { LuCalendarDays } from "react-icons/lu";
@@ -13,14 +14,12 @@ import wand from "../../public/svg/wand.svg";
 import SvgViewer from "@/components/UI/SVGViewer";
 import { useGetTasksQuery } from "@/store/taskApi";
 import SingleDayCard from "@/components/Layout/MyApp/SingleDayCard";
-import TimeAgo from "javascript-time-ago";
-import en from "javascript-time-ago/locale/en";
+import "@/utils/timeAgoSetup";
 
 export default function Home() {
+  const timeAgo = new TimeAgo("en-US");
   const today = new Date();
   const dispatch = useDispatch();
-  TimeAgo.addDefaultLocale(en);
-  const timeAgo = new TimeAgo("en-US");
   const userId = useSelector((state: RootState) => state.user.userId);
   const [showPrevious, setShowPrevious] = useState(true);
   const [showToday, setShowToday] = useState(true);
@@ -37,11 +36,7 @@ export default function Home() {
   }, [dispatch]);
 
   // to get all related task
-  const {
-    data: tasksResponse,
-    isLoading,
-    error,
-  } = useGetTasksQuery(userId as string, {
+  const { data: tasksResponse, error } = useGetTasksQuery(userId as string, {
     // Don't fetch if userId is missing
     skip: !userId,
   });
@@ -105,7 +100,7 @@ export default function Home() {
             showDeet={false}
             mainText="Overdue"
             header={recentPastTask.task_title}
-            theDay="Yesterday"
+            theDay={timeAgo.format(recentPastTask.scheduleStart)}
             dayAlarm={<LuCalendarDays />}
             bodyText={recentPastTask.task_body}
             taskCategory={recentPastTask.taskCategory}

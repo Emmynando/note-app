@@ -9,14 +9,13 @@ import { useSelector } from "react-redux";
 
 export default function WorkSpace() {
   const userId = useSelector((state: RootState) => state.user.userId);
-  const {
-    data: tasksResponse,
-    isLoading,
-    error,
-  } = useGetTasksQuery(userId as string, {
-    // Don't fetch if userId is missing
-    skip: !userId,
-  });
+  const { data: tasksResponse, isLoading } = useGetTasksQuery(
+    userId as string,
+    {
+      // Don't fetch if userId is missing
+      skip: !userId,
+    }
+  );
 
   const tasks = tasksResponse?.data || [];
 

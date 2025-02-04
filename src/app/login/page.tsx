@@ -69,7 +69,7 @@ export default function Login() {
         dispatch(setUserInfo({ userId: id, userToken: accessToken }));
         router.replace("/");
       }
-    } catch (error) {
+    } catch {
       toast.error("Server Error");
       setLoginDeets({
         email: "",
@@ -153,21 +153,3 @@ export default function Login() {
     </main>
   );
 }
-
-// const refreshAccessToken = async () => {
-//   const res = await fetch(`${api}/refresh`, { method: "POST", credentials: "include" });
-//   const data = await res.json();
-//   if (res.ok) {
-//     localStorage.setItem("accessToken", data.accessToken);
-//   }
-// };
-
-// export const handleLogout = (req: Request, res: Response) => {
-//   res.clearCookie("refreshToken", {
-//     httpOnly: true,
-//     secure: true,
-//     sameSite: "Strict",
-//   });
-
-//   res.status(200).json({ message: "Logged out successfully" });
-// };

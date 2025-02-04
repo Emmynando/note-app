@@ -90,7 +90,7 @@ export default function Signup() {
         );
         router.replace("/");
       }
-    } catch (error) {
+    } catch {
       toast.error("Authentication Failed");
       setSignupDeets({
         ...signupDeets,

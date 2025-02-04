@@ -4,7 +4,6 @@ import { FiSearch } from "react-icons/fi";
 
 import { LuCalendarDays } from "react-icons/lu";
 import { MdOutlineWbSunny } from "react-icons/md";
-import { PiHashStraightBold } from "react-icons/pi";
 import { useGetTasksQuery } from "@/store/taskApi";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";

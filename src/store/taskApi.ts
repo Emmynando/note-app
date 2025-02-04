@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { setUserInfo, clearUserInfo } from "@/store/UserReducer";
+import { setUserInfo } from "@/store/UserReducer";
 import { refreshAccessToken } from "@/utils/refreshToken";
 import { RootState } from "@/store/store";
 import { api } from "@/utils/baseUrl";

@@ -61,3 +61,33 @@ export function formatDayMonth(dateString: string) {
 
   return `${getOrdinal(day)}`;
 }
+
+// Filter tasks for specific time
+export function filterTasksByDay(
+  tasks,
+  filterType: "past" | "today" | "upcoming"
+) {
+  if (!tasks || !Array.isArray(tasks)) return [];
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Normalize to start of the day
+
+  return tasks.filter((task) => {
+    if (!task.scheduleStart) return false;
+
+    const taskDate = new Date(task.scheduleStart);
+    taskDate.setHours(0, 0, 0, 0); // Normalize to start of the day
+
+    if (filterType === "today") {
+      return taskDate.getTime() === today.getTime();
+    }
+    if (filterType === "past") {
+      return taskDate.getTime() < today.getTime();
+    }
+    if (filterType === "upcoming") {
+      return taskDate.getTime() > today.getTime();
+    }
+
+    return false;
+  });
+}

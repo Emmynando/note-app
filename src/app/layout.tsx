@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import ReduxClientWrapper from "@/components/UI/ReduxClientWrap";
+import "@/utils/timeAgoSetup";
 
 export const metadata: Metadata = {
   title: "Note App",

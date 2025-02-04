@@ -9,9 +9,9 @@ import AppointmentEvent from "./AppointmentEvent";
 import { EVENTS } from "@/components/constant";
 import clsx from "clsx";
 import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
-import { useGetTasksQuery } from "@/store/taskApi";
+// import { useSelector } from "react-redux";
+// import { RootState } from "@/store/store";
+// import { useGetTasksQuery } from "@/store/taskApi";
 
 const localizer = momentLocalizer(moment);
 type Keys = keyof typeof Views;
@@ -29,7 +29,7 @@ export const VIEW_OPTIONS = [
 ];
 
 const CalendarComponent = () => {
-  const userId = useSelector((state: RootState) => state.user.userId);
+  // const userId = useSelector((state: RootState) => state.user.userId);
   const [date, setDate] = useState(new Date());
   const [view, setView] = useState<(typeof Views)[Keys]>(Views.WEEK);
   const [isMonth, setMonth] = useState(
@@ -37,16 +37,16 @@ const CalendarComponent = () => {
   );
 
   // to get all related task
-  const { data: tasksResponse, error } = useGetTasksQuery(userId as string, {
-    // Don't fetch if userId is missing
-    skip: !userId,
-  });
+  // const { data: tasksResponse, error } = useGetTasksQuery(userId as string, {
+  //   // Don't fetch if userId is missing
+  //   skip: !userId,
+  // });
 
-  if (error) {
-    console.log("Error Fetching Task:", error);
-  }
+  // if (error) {
+  //   console.log("Error Fetching Task:", error);
+  // }
 
-  const tasks = tasksResponse?.data || [];
+  // const tasks = tasksResponse?.data || [];
 
   // Update the month name when `date` changes
   useEffect(() => {
