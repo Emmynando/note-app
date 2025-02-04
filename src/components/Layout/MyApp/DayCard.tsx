@@ -5,7 +5,7 @@ import { TiStarOutline, TiStarFullOutline } from "react-icons/ti";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap/all";
 import { Flip } from "gsap/all";
-import { formatDayMonth } from "@/utils/helpers";
+import { extractTextFromHtml, formatDayMonth } from "@/utils/helpers";
 import clsx from "clsx";
 
 gsap.registerPlugin(Flip);
@@ -98,7 +98,7 @@ export default function DayCard({
                 {showDeet && (
                   <section className="my-2 pl-4">
                     <p className="text-fadeWhite text-xs w-2/3">
-                      {task.task_body}
+                      {extractTextFromHtml(task.task_body)}
                     </p>
                   </section>
                 )}

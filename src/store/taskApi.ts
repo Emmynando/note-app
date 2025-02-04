@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { setUserInfo } from "@/store/UserReducer";
+import { setUserInfo, clearUserInfo } from "@/store/UserReducer";
 import { refreshAccessToken } from "@/utils/refreshToken";
 import { RootState } from "@/store/store";
 import { api } from "@/utils/baseUrl";
@@ -44,9 +44,9 @@ const baseQueryWithAuth = async (args, queryApi, extraOptions) => {
 
     if (!refreshedData || !refreshedData.newAccessToken) {
       console.error("Token refresh failed, logging out...");
-      //   localStorage.clear();
-      //   queryApi.dispatch(clearUserInfo());
-      //   window.location.href = "/login";
+      localStorage.clear();
+      queryApi.dispatch(clearUserInfo());
+      window.location.href = "/login";
       return result;
     }
 
