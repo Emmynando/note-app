@@ -9,12 +9,14 @@ interface AuthProps {
   password: string;
   confirmPassword: string;
   showPassword: boolean;
+  loading: boolean;
   setShowPassword: React.Dispatch<React.SetStateAction<boolean>>;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
 export default function AuthComp({
+  loading,
   email,
   username,
   password,
@@ -118,7 +120,7 @@ export default function AuthComp({
           <button
             className="w-full h-[3rem] rounded-[32px] bg-[#2f3136] py-2 font-golos text-white mb-auto"
             type="submit">
-            Create Your Account
+            {loading ? "Signing..." : "Create Your Account"}
           </button>
         </form>
         <p className="mt-1 text-center text-sm text-[#2f3136]">

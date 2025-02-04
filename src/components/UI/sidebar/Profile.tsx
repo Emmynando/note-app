@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import userIcon from "../../../../public/svg/userIcon.svg";
@@ -8,6 +9,8 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import gsap from "gsap";
 import { Flip } from "gsap/all";
 import { useGSAP } from "@gsap/react";
+import { clearUserInfo } from "@/store/UserReducer";
+import { useRouter } from "next/navigation";
 
 gsap.registerPlugin(Flip);
 
@@ -17,6 +20,7 @@ interface ProfileProps {
 }
 
 export default function Profile({ showList, handleToggle }: ProfileProps) {
+  const router = useRouter();
   useGSAP(
     () => {
       if (showList) {
@@ -39,6 +43,11 @@ export default function Profile({ showList, handleToggle }: ProfileProps) {
     },
     { dependencies: [showList], revertOnUpdate: true }
   );
+
+  async function handleLogout() {
+    clearUserInfo();
+    router.replace("/login");
+  }
 
   return (
     <main className="px-4 py-2">
@@ -89,7 +98,9 @@ export default function Profile({ showList, handleToggle }: ProfileProps) {
               </Link>
             </li>
             <li className="">
-              <button className="flex items-center gap-2 text-xs text-[#ef4444]">
+              <button
+                className="flex items-center gap-2 text-xs text-[#ef4444]"
+                onClick={handleLogout}>
                 <FiLogOut />
                 <p>Log out</p>
               </button>

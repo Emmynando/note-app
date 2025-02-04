@@ -2,8 +2,14 @@
 import AuthComp from "@/components/Layout/Auth/AuthComp";
 import { useState } from "react";
 import { api } from "@/utils/baseUrl";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "@/store/UserReducer";
 
 export default function Signup() {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [signupDeets, setSignupDeets] = useState({
     email: "",
     password: "",
@@ -11,6 +17,7 @@ export default function Signup() {
     username: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
@@ -24,7 +31,12 @@ export default function Signup() {
     event.preventDefault();
 
     if (signupDeets.password !== signupDeets.confirmPassword) {
-      console.log("Password do not match");
+      toast.error("Password do not match");
+      setSignupDeets({
+        ...signupDeets,
+        confirmPassword: "",
+        password: "",
+      });
       return;
     }
 
@@ -33,11 +45,17 @@ export default function Signup() {
       signupDeets.password.length < 2 ||
       signupDeets.username.length < 2
     ) {
-      console.log("invalid Details");
+      toast.error("invalid Details");
+      setSignupDeets({
+        ...signupDeets,
+        confirmPassword: "",
+        password: "",
+      });
       return;
     }
 
     try {
+      setLoading(true);
       const result = await fetch(`${api}/auth/register`, {
         method: "POST",
         headers: {
@@ -50,18 +68,44 @@ export default function Signup() {
         }),
       });
       if (!result.ok) {
-        throw new Error("Login Failed");
+        toast.error("Signup Failed");
+        setSignupDeets({
+          ...signupDeets,
+          confirmPassword: "",
+          password: "",
+        });
+        return;
       }
       const data = await result.json();
-      console.log(data);
+      const { responseData, accessToken } = data;
+
+      // Store userId in localStorage
+      localStorage.setItem("userId", responseData.id);
+      localStorage.setItem("userToken", accessToken);
+
+      if (responseData) {
+        toast.success("Signup Successful");
+        dispatch(
+          setUserInfo({ userId: responseData.id, userToken: accessToken })
+        );
+        router.replace("/");
+      }
     } catch (error) {
-      console.error("Error:", error);
+      toast.error("Authentication Failed");
+      setSignupDeets({
+        ...signupDeets,
+        confirmPassword: "",
+        password: "",
+      });
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <main>
       <AuthComp
+        loading={loading}
         email={signupDeets.email}
         username={signupDeets.username}
         password={signupDeets.password}
