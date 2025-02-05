@@ -15,6 +15,17 @@ interface Task {
   userId?: string;
 }
 
+interface AddTaskProps {
+  id: string;
+  task_title: string;
+  task_body: string;
+  reminder: Date;
+  scheduleStart: Date;
+  scheduleEnd?: Date;
+  taskCategory: string;
+  userId: string;
+}
+
 interface GetTasksResponse {
   message: string;
   data: Task[];
@@ -77,11 +88,12 @@ export const taskApi = createApi({
     getTasks: builder.query<GetTasksResponse, string>({
       query: (userId) => `/task/${userId}`,
     }),
-    addTask: builder.mutation<Task, Partial<Task>>({
-      query: (newTask) => ({
-        url: `/task`,
+    addTask: builder.mutation<Task, Partial<AddTaskProps>>({
+      query: ({ userId, ...newTask }) => ({
+        url: `/task/${userId}`,
         method: "POST",
         body: newTask,
+        credentials: "include",
       }),
     }),
     updateTask: builder.mutation<Task, { id: string; data: Partial<Task> }>({

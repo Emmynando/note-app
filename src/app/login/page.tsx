@@ -65,6 +65,7 @@ export default function Login() {
       localStorage.setItem("userId", id);
       localStorage.setItem("userToken", accessToken);
       if (id) {
+        // console.log(accessToken);
         toast.success("Login Successful");
         dispatch(setUserInfo({ userId: id, userToken: accessToken }));
         router.replace("/");

@@ -15,6 +15,7 @@ export default {
         priText: "#A4C6ED",
         priFont: "#e0e0e0",
         fadeWhite: "rgba(255,255,255, 0.5)",
+        fadeBlack: "rgba(0,0,0, 0.5)",
         secFade: "rgba(191,191,191, 0.4)",
         bgBlur: "rgba(0,0,0, 0.49)",
         boxShadow: {

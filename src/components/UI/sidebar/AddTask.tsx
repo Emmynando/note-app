@@ -1,7 +1,7 @@
 import { FiPlus } from "react-icons/fi";
 import NavItems from "./NavItemsComp";
 import { FiSearch } from "react-icons/fi";
-
+import { toast } from "react-toastify";
 import { LuCalendarDays } from "react-icons/lu";
 import { MdOutlineWbSunny } from "react-icons/md";
 import { useGetTasksQuery } from "@/store/taskApi";
@@ -48,11 +48,19 @@ export default function AddTask() {
     },
   ];
 
+  function handleModal() {
+    if (!userId) {
+      toast.warn("You are not Logged in");
+      return;
+    }
+    openAddListModal();
+  }
+
   return (
     <main className="container border-b border-gray-500">
       <button
         className="flex items-center gap-4 text-priText text-xl my-4"
-        onClick={openAddListModal}>
+        onClick={handleModal}>
         <FiPlus /> Add Task
       </button>
       <div className="relative w-full max-w-md mb-2">

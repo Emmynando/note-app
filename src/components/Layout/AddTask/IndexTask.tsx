@@ -5,12 +5,10 @@ import Schedule from "./Schedule";
 import GeneralIndex from "./General";
 import TaskHeader from "./TaskHeader";
 import RemindMe from "./Remind";
-import { api } from "@/utils/baseUrl";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { fetchWithToken } from "@/utils/RequestWrapper";
-import { useDispatch } from "react-redux";
+import { useAddTaskMutation } from "@/store/taskApi";
 
 interface DateProps {
   startDate: Date | null;
@@ -18,9 +16,10 @@ interface DateProps {
 }
 
 export default function IndexTask() {
-  const dispatch = useDispatch();
   const userId = useSelector((state: RootState) => state.user.userId);
   const userToken = useSelector((state: RootState) => state.user.userToken);
+  const [addTask, { error }] = useAddTaskMutation();
+  const { closeAddListModal } = useTask();
   const { showAddList } = useTask();
   const [activeComponent, setActiveComponent] = useState<
     "General" | "Schedule" | "Remind"
@@ -63,12 +62,12 @@ export default function IndexTask() {
   async function handleSubmitTask() {
     const todayDate = new Date();
     const taskData = {
-      userId,
+      userId: userId || undefined,
       task_title: taskTitle,
       task_body: taskbody,
-      reminder: selectedRemindDates.startDate,
-      scheduleStart: selectedScheduleDates.startDate,
-      scheduleEnd: selectedScheduleDates.endDate,
+      reminder: selectedRemindDates.startDate || undefined,
+      scheduleStart: selectedScheduleDates.startDate || undefined,
+      scheduleEnd: selectedScheduleDates.endDate || undefined,
       taskCategory: category,
     };
 
@@ -115,7 +114,7 @@ export default function IndexTask() {
       ) {
         console.log(remindDate, startDate);
         toast.error(
-          "Reminder must be at least 15 minutes before your scheduled time"
+          `Reminder ${remindDate} must be at least 15 minutes before your scheduled time ${startDate}`
         );
         return;
       }
@@ -130,48 +129,29 @@ export default function IndexTask() {
         console.log("user not found");
         return;
       }
-      // const response = await fetch(`${api}/task/${userId}`, {
-      //   method: "POST",
-      //   body: JSON.stringify({
-      //     task_title: taskTitle,
-      //     task_body: taskbody,
-      //     reminder: selectedRemindDates.startDate?.toISOString(),
-      //     scheduleStart: selectedScheduleDates.startDate?.toISOString(),
-      //     scheduleEnd: selectedScheduleDates.endDate?.toISOString(),
-      //     taskCategory: category,
-      //   }),
-      //   credentials: "include",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization: `Bearer ${userToken}`,
+
+      await addTask(taskData).unwrap();
+      // const response = await fetchWithToken(
+      //   `${api}/task/${userId}`,
+      //   {
+      //     method: "POST",
+      //     body: JSON.stringify(taskData),
+      //     credentials: "include",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
       //   },
-      // });
+      //   userToken,
+      //   dispatch
+      // );
 
-      const response = await fetchWithToken(
-        `${api}/task/${userId}`,
-        {
-          method: "POST",
-          body: JSON.stringify(taskData),
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-        userToken,
-        dispatch
-      );
-
-      // if (response?.ok) {
-
-      //   console.log("Task saved:", data);
-      // } else {
-      //   console.error("Failed to save task");
-      // }
-      if (!response?.ok) {
-        console.log(response);
+      if (error) {
+        toast.error("Error Adding Task");
+        return;
       }
-      toast.success("Successfull");
-      // console.log(data);
+      toast.success("Task Added");
+      closeAddListModal();
+      return;
     } catch {
       toast.error("server Error");
     }

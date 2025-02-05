@@ -15,6 +15,8 @@ import SvgViewer from "@/components/UI/SVGViewer";
 import { useGetTasksQuery } from "@/store/taskApi";
 import SingleDayCard from "@/components/Layout/MyApp/SingleDayCard";
 import "@/utils/timeAgoSetup";
+import UnAuth from "@/components/UI/UnAuthPage";
+import myday from "../../public/unAuth/myday.png";
 
 export default function Home() {
   const timeAgo = new TimeAgo("en-US");
@@ -84,9 +86,13 @@ export default function Home() {
     ?.filter((task) => task.scheduleStart)
     .map((task) => ({ ...task, scheduleStart: new Date(task.scheduleStart!) }))
     .filter((task) => task.scheduleStart > today)
-    .sort((a, b) => b.scheduleStart.getTime() - a.scheduleStart.getTime());
+    .sort((a, b) => a.scheduleStart.getTime() - b.scheduleStart.getTime());
 
   const upComingTask = upcomingTasks.length > 0 ? upcomingTasks[0] : null;
+
+  if (!userId) {
+    return <UnAuth unAuthImage={myday} />;
+  }
 
   return (
     <main>

@@ -11,6 +11,8 @@ import { Flip } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 import { clearUserInfo } from "@/store/UserReducer";
 import { useRouter } from "next/navigation";
+import { RootState } from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
 
 gsap.registerPlugin(Flip);
 
@@ -21,6 +23,8 @@ interface ProfileProps {
 
 export default function Profile({ showList, handleToggle }: ProfileProps) {
   const router = useRouter();
+  const userId = useSelector((state: RootState) => state.user.userId);
+  const dispatch = useDispatch();
   useGSAP(
     () => {
       if (showList) {
@@ -44,8 +48,10 @@ export default function Profile({ showList, handleToggle }: ProfileProps) {
     { dependencies: [showList], revertOnUpdate: true }
   );
 
-  async function handleLogout() {
-    clearUserInfo();
+  function handleLogout() {
+    console.log("logout");
+    dispatch(clearUserInfo());
+    console.log(userId);
     router.replace("/login");
   }
 
@@ -98,12 +104,21 @@ export default function Profile({ showList, handleToggle }: ProfileProps) {
               </Link>
             </li>
             <li className="">
-              <button
-                className="flex items-center gap-2 text-xs text-[#ef4444]"
-                onClick={handleLogout}>
-                <FiLogOut />
-                <p>Log out</p>
-              </button>
+              {userId ? (
+                <button
+                  className="flex items-center gap-2 text-xs text-[#ef4444]"
+                  onClick={handleLogout}>
+                  <FiLogOut />
+                  <p>Log out</p>
+                </button>
+              ) : (
+                <Link
+                  href="/login"
+                  className="flex items-center gap-2 text-m text-blue-400">
+                  <FiLogOut />
+                  <p>Log in</p>
+                </Link>
+              )}
             </li>
           </ul>
         </section>

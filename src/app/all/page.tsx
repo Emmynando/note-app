@@ -8,6 +8,8 @@ import { filterTasksByDay } from "@/utils/helpers";
 import { useGetTasksQuery } from "@/store/taskApi";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import UnAuth from "@/components/UI/UnAuthPage";
+import unAuthImg from "../../../public/unAuth/allTask.png";
 
 export default function AllScreen() {
   const userId = useSelector((state: RootState) => state.user.userId);
@@ -38,6 +40,10 @@ export default function AllScreen() {
   const pastTasks = filterTasksByDay(tasks, "past");
   const todaysTasks = filterTasksByDay(tasks, "today");
   const upcomingTasks = filterTasksByDay(tasks, "upcoming");
+
+  if (!userId) {
+    return <UnAuth unAuthImage={unAuthImg} />;
+  }
 
   return (
     <main>
