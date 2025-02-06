@@ -131,19 +131,6 @@ export default function IndexTask() {
       }
 
       await addTask(taskData).unwrap();
-      // const response = await fetchWithToken(
-      //   `${api}/task/${userId}`,
-      //   {
-      //     method: "POST",
-      //     body: JSON.stringify(taskData),
-      //     credentials: "include",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //   },
-      //   userToken,
-      //   dispatch
-      // );
 
       if (error) {
         toast.error("Error Adding Task");

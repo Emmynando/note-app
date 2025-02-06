@@ -140,7 +140,8 @@ export default function Login() {
           <button
             type="submit"
             className="w-full h-[3rem] rounded-[32px] bg-[#2f3136] 
-          py-2 font-golos text-white mt-[20%]">
+          py-2 font-golos text-white mt-[20%]"
+            disabled={loading}>
             {!loading ? "Login" : "Loading"}
           </button>
         </form>

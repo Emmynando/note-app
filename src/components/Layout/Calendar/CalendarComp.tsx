@@ -1,6 +1,6 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { Calendar, momentLocalizer, Views } from "react-big-calendar";
 import moment from "moment";
 import "moment-timezone";
@@ -9,9 +9,19 @@ import AppointmentEvent from "./AppointmentEvent";
 import { EVENTS } from "@/components/constant";
 import clsx from "clsx";
 import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
-// import { useSelector } from "react-redux";
-// import { RootState } from "@/store/store";
-// import { useGetTasksQuery } from "@/store/taskApi";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { useGetTasksQuery } from "@/store/taskApi";
+
+const testEvents = [
+  {
+    id: "test-event",
+    title: "Test Event",
+    start: new Date(), // Now
+    end: new Date(new Date().getTime() + 60 * 60 * 1000), // +1 hour
+    allDay: false,
+  },
+];
 
 const localizer = momentLocalizer(moment);
 type Keys = keyof typeof Views;
@@ -29,39 +39,55 @@ export const VIEW_OPTIONS = [
 ];
 
 const CalendarComponent = () => {
-  // const userId = useSelector((state: RootState) => state.user.userId);
+  const userId = useSelector((state: RootState) => state.user.userId);
   const [date, setDate] = useState(new Date());
   const [view, setView] = useState<(typeof Views)[Keys]>(Views.WEEK);
   const [isMonth, setMonth] = useState(
     date.toLocaleString("en-US", { month: "long" })
   );
 
-  // to get all related task
-  // const { data: tasksResponse, error } = useGetTasksQuery(userId as string, {
-  //   // Don't fetch if userId is missing
-  //   skip: !userId,
-  // });
-
-  // if (error) {
-  //   console.log("Error Fetching Task:", error);
-  // }
-
-  // const tasks = tasksResponse?.data || [];
-
-  // Update the month name when `date` changes
   useEffect(() => {
     setMonth(date.toLocaleString("en-US", { month: "long" }));
   }, [date]);
 
-  const components = {
-    event: ({ event }: any) => {
-      const data = event?.data;
-      if (data?.appointment)
-        return <AppointmentEvent appointment={data?.appointment} />;
+  // to get all related task
+  const { data: tasksResponse, error } = useGetTasksQuery(userId as string, {
+    // Don't fetch if userId is missing
+    skip: !userId,
+  });
 
-      return null;
-    },
-  };
+  if (error) {
+    console.log("Error Fetching Task:", error);
+  }
+
+  const events = useMemo(() => {
+    if (!tasksResponse?.data) return [];
+
+    return tasksResponse.data.map((task: any) => {
+      const start = new Date(task.scheduleStart);
+      const end = task.scheduleEnd
+        ? new Date(task.scheduleEnd)
+        : new Date(start.getTime() + 60 * 60 * 1000);
+
+      return {
+        id: task.id,
+        title: task.task_title,
+        start,
+        end,
+        allDay: false,
+      };
+    });
+  }, [tasksResponse]);
+
+  const components = useMemo(
+    () => ({
+      event: ({ event }: any) => {
+        console.log(event);
+        return <AppointmentEvent task={testEvents} />;
+      },
+    }),
+    [events]
+  );
 
   const onNextClick = useCallback(() => {
     if (view === Views.DAY) {
@@ -92,6 +118,8 @@ const CalendarComponent = () => {
 
     setDate(newDate);
   }, [view, date]);
+
+  // console.log(testEvents);
   return (
     <div className="p-4">
       {/* buttons */}
@@ -128,7 +156,8 @@ const CalendarComponent = () => {
       <div className="relative">
         <Calendar
           localizer={localizer}
-          events={EVENTS}
+          // Pass the events array
+          events={events}
           startAccessor="start"
           endAccessor="end"
           defaultView={Views.WEEK}
@@ -141,7 +170,7 @@ const CalendarComponent = () => {
             margin: "0 auto",
           }}
           className="shadow-lg bg-inherit"
-          components={components}
+          // components={components}
           date={date} // Pass the `date` state
           onNavigate={(newDate) => setDate(newDate)} // Sync navigation
           onView={(newView) => handleViewChange(newView)} // Sync view change

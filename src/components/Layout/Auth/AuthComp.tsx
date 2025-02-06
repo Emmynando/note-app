@@ -119,7 +119,8 @@ export default function AuthComp({
 
           <button
             className="w-full h-[3rem] rounded-[32px] bg-[#2f3136] py-2 font-golos text-white mb-auto"
-            type="submit">
+            type="submit"
+            disabled={loading}>
             {loading ? "Signing..." : "Create Your Account"}
           </button>
         </form>

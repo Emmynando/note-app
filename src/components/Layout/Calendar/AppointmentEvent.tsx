@@ -1,15 +1,10 @@
-import { Appointment } from "@/types";
 import { TiStarFullOutline } from "react-icons/ti";
 import magicWand from "../../../../public/svg/wand.svg";
 import Image from "next/image";
 
-export default function AppointmentEvent({
-  appointment,
-}: {
-  appointment: Appointment;
-  isMonthView?: boolean;
-}) {
-  const { category, title } = appointment;
+export default function AppointmentEvent({ task }) {
+  const { category, title, scheduleStart } = task;
+  console.log("card", task);
 
   return (
     <main className="relative flex flex-col h-dvh shadow-custom bg-[#2f3033] rounded-sm">
@@ -28,7 +23,7 @@ export default function AppointmentEvent({
               <Image src={magicWand} width={0} height={0} alt="" />
             </span>
           </div>
-          <p className="text-[10px]"> 1pm-4pm</p>
+          <p className="text-[10px]"> {scheduleStart}</p>
         </div>
       </div>
     </main>

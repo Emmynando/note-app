@@ -12,7 +12,11 @@ export async function refreshAccessToken() {
       return null; // Instead of redirecting immediately
     }
     const data = await response.json();
-    return { newAccessToken: data.accessToken, userId: data.id };
+    const { id: newAccessToken, accessToken: userId } = data;
+    // Update localStorage
+    localStorage.setItem("accessToken", newAccessToken);
+    localStorage.setItem("userId", userId);
+    return { newAccessToken, userId };
   } catch (error) {
     console.error("Error refreshing access token:", error);
     return null;

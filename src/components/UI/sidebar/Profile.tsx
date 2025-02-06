@@ -49,9 +49,7 @@ export default function Profile({ showList, handleToggle }: ProfileProps) {
   );
 
   function handleLogout() {
-    console.log("logout");
     dispatch(clearUserInfo());
-    console.log(userId);
     router.replace("/login");
   }
 

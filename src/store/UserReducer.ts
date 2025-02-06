@@ -20,7 +20,6 @@ const userSlice = createSlice({
       state,
       action: PayloadAction<{ userId: string; userToken: string }>
     ) => {
-      // console.log("Setting userId:", action.payload.userToken),
       state.userId = action.payload.userId;
       state.userToken = action.payload.userToken;
     },
@@ -28,6 +27,9 @@ const userSlice = createSlice({
     clearUserInfo: (state) => {
       state.userId = null;
       state.userToken = null;
+      // Clear localStorage
+      localStorage.removeItem("userId");
+      localStorage.removeItem("userToken");
     },
   },
 });

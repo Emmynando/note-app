@@ -1,21 +1,21 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setUserInfo } from "@/store/UserReducer";
-import DayCard from "@/components/Layout/MyApp/DayCard";
 import TimeAgo from "javascript-time-ago";
 import { useSelector } from "react-redux";
 import { MdOutlineAccessAlarms } from "react-icons/md";
 import { LuCalendarDays } from "react-icons/lu";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { RootState } from "@/store/store";
-import DayHeader from "@/components/UI/Header";
-import wand from "../../public/svg/wand.svg";
-import SvgViewer from "@/components/UI/SVGViewer";
-import { useGetTasksQuery } from "@/store/taskApi";
-import SingleDayCard from "@/components/Layout/MyApp/SingleDayCard";
 import "@/utils/timeAgoSetup";
 import UnAuth from "@/components/UI/UnAuthPage";
+import SvgViewer from "@/components/UI/SVGViewer";
+import DayCard from "@/components/Layout/MyApp/DayCard";
+import DayHeader from "@/components/UI/Header";
+import SingleDayCard from "@/components/Layout/MyApp/SingleDayCard";
+import wand from "../../public/svg/wand.svg";
+import { RootState } from "@/store/store";
+import { setUserInfo } from "@/store/UserReducer";
+import { useGetTasksQuery } from "@/store/taskApi";
 import myday from "../../public/unAuth/myday.png";
 
 export default function Home() {
