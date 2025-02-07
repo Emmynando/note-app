@@ -6,17 +6,29 @@ import Projects from "./Projects";
 import WorkSpace from "./WorkSpace";
 import { FiPlus } from "react-icons/fi";
 import { RiMenuAddFill } from "react-icons/ri";
+import useWindowSize from "@/hooks/useWindowSize";
 import clsx from "clsx";
+import UnresponsiveView from "../UnReponsiveComp";
 
 export default function Sidebar({ onClick }: { onClick: () => void }) {
   const [showList, setShowList] = useState(false);
+  const { windowWidth } = useWindowSize();
+  const hideNav = windowWidth && windowWidth >= 1024;
 
   function handleToggle() {
     setShowList((prev) => !prev);
   }
 
+  if (!hideNav) {
+    return <UnresponsiveView />;
+  }
+
   return (
-    <main className="absolute inset-0 z-40 bg-[#2f3136] w-[15%] h-dvh">
+    <main
+      className={clsx(
+        "absolute inset-0 z-40 bg-[#2f3136] w-[15%] h-dvh",
+        !hideNav && "!hidden"
+      )}>
       <Profile showList={showList} handleToggle={handleToggle} />
       <div
         className={clsx(
