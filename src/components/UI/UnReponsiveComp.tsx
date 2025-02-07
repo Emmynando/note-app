@@ -6,11 +6,11 @@ export default function UnresponsiveView() {
       className="w-dvw h-dvh flex items-center justify-center fixed z-50 bg-[#2f3136]
      inset-0 overflow-hidden">
       <div className="w-[80%] md-[60%] h-max-content">
-        <h2 className="text-center">
+        <h2 className="text-center text-base">
           The Page Which you asked to view, cannot be seen on smaller devices.
           Kindly access this on a larger screen...
         </h2>
-        <p className="text-center mt-8">
+        <p className="text-center mt-8 text-base">
           if you are still here, would you want to view the developer&apos;s
           LinkedIn Profile,{" "}
           <Link
