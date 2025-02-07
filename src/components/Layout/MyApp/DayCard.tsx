@@ -24,16 +24,16 @@ interface DayCardProps {
   dayAlarm: ReactNode;
   toogleDeetButton?: ReactNode;
   toogleDeetButtonTwo?: ReactNode;
-  showDeet: boolean;
+  showDeetMap: { [key: string]: boolean };
   showCard: boolean;
   setShowCard: (text: boolean) => void;
-  toggleDeets: () => void;
+  toggleDeets: (id: string) => void;
   arrayTask: Task[];
 }
 export default function DayCard({
   mainText,
   theDay,
-  showDeet,
+  showDeetMap,
   toggleDeets,
   toogleDeetButton,
   toogleDeetButtonTwo,
@@ -88,14 +88,16 @@ export default function DayCard({
                   <div className="flex items-end gap-4">
                     <button
                       className="font-semibold text-base text-priFont"
-                      onClick={toggleDeets}>
-                      {showDeet ? toogleDeetButton : toogleDeetButtonTwo}
+                      onClick={() => toggleDeets(task.id)}>
+                      {showDeetMap[task.id]
+                        ? toogleDeetButton
+                        : toogleDeetButtonTwo}
                     </button>
                     <p className="font-semibold text-base text-priFont">...</p>
                   </div>
                 </section>
 
-                {showDeet && (
+                {showDeetMap[task.id] && (
                   <section className="my-2 pl-4">
                     <p className="text-fadeWhite text-xs w-2/3">
                       {extractTextFromHtml(task.task_body)}

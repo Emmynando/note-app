@@ -55,9 +55,9 @@ const baseQueryWithAuth = async (args, queryApi, extraOptions) => {
 
     if (!refreshedData || !refreshedData.newAccessToken) {
       console.error("Token refresh failed, logging out...");
-      // localStorage.clear();
-      // queryApi.dispatch(clearUserInfo());
-      // window.location.href = "/login";
+      localStorage.clear();
+      queryApi.dispatch(clearUserInfo());
+      window.location.href = "/login";
       return result;
     }
 

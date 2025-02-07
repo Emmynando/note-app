@@ -3,8 +3,7 @@ import magicWand from "../../../../public/svg/wand.svg";
 import Image from "next/image";
 
 export default function AppointmentEvent({ task }) {
-  const { category, title, scheduleStart } = task;
-  console.log("card", task);
+  const { category, title, scheduleStart } = task || [];
 
   return (
     <main className="relative flex flex-col h-dvh shadow-custom bg-[#2f3033] rounded-sm">

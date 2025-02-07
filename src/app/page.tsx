@@ -27,6 +27,9 @@ export default function Home() {
   const [showToday, setShowToday] = useState(true);
   const [showUpcoming, setShowUpcoming] = useState(true);
   const [showDeet, setShowDeet] = useState(false);
+  const [showDeetMap, setShowDeetMap] = useState<{ [key: string]: boolean }>(
+    {}
+  );
 
   // to get user details
   useEffect(() => {
@@ -48,10 +51,17 @@ export default function Home() {
   }
 
   const tasks = tasksResponse?.data || [];
+
   function toggleDeets() {
     setShowDeet((prevState) => !prevState);
   }
 
+  const toggleDeetsArray = (id: string) => {
+    setShowDeetMap((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
   // Filter tasks that are scheduled for today
   const todaysTasks =
     tasks &&
@@ -122,8 +132,8 @@ export default function Home() {
           showCard={showToday}
           toogleDeetButton={<IoIosArrowDown />}
           toogleDeetButtonTwo={<IoIosArrowUp />}
-          showDeet={showDeet}
-          toggleDeets={toggleDeets}
+          showDeetMap={showDeetMap}
+          toggleDeets={toggleDeetsArray}
           mainText="Today"
           theDay="Today"
           dayAlarm={<MdOutlineAccessAlarms />}
@@ -133,7 +143,7 @@ export default function Home() {
           <SingleDayCard
             setShowCard={setShowUpcoming}
             showCard={showUpcoming}
-            showDeet={false}
+            showDeet={showDeet}
             toggleDeets={toggleDeets}
             mainText="Upcoming"
             header={upComingTask.task_title}

@@ -14,15 +14,16 @@ import unAuthImg from "../../../public/unAuth/allTask.png";
 export default function AllScreen() {
   const userId = useSelector((state: RootState) => state.user.userId);
 
-  const [showDeet, setShowDeet] = useState(false);
-  const showPastDeet = true;
-  const showUpComingDeet = true;
   const [showPast, setShowPast] = useState(true);
   const [showUpcoming, setShowUpcoming] = useState(true);
   const [showToday, setShowToday] = useState(true);
+  const [showDeet, setShowDeet] = useState<{ [key: string]: boolean }>({});
 
-  function toggleDeets() {
-    setShowDeet((prevState) => !prevState);
+  function toggleDeets(id: string) {
+    setShowDeet((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
   }
 
   // to get all related task
@@ -54,8 +55,8 @@ export default function AllScreen() {
           showCard={showPast}
           toogleDeetButton={<IoIosArrowDown />}
           toogleDeetButtonTwo={<IoIosArrowUp />}
-          showDeet={showPastDeet}
-          toggleDeets={() => setShowPast((prevState) => !prevState)}
+          showDeetMap={showDeet}
+          toggleDeets={toggleDeets}
           mainText="Overdue"
           theDay="Overdue"
           dayAlarm={<MdOutlineAccessAlarms />}
@@ -66,7 +67,7 @@ export default function AllScreen() {
           showCard={showToday}
           toogleDeetButton={<IoIosArrowDown />}
           toogleDeetButtonTwo={<IoIosArrowUp />}
-          showDeet={showDeet}
+          showDeetMap={showDeet}
           toggleDeets={toggleDeets}
           mainText="Today"
           theDay="Today"
@@ -78,8 +79,8 @@ export default function AllScreen() {
           showCard={showUpcoming}
           toogleDeetButton={<IoIosArrowDown />}
           toogleDeetButtonTwo={<IoIosArrowUp />}
-          showDeet={showUpComingDeet}
-          toggleDeets={() => setShowUpcoming((prevState) => !prevState)}
+          showDeetMap={showDeet}
+          toggleDeets={toggleDeets}
           mainText="Upcoming"
           theDay="Upcoming"
           dayAlarm={<MdOutlineAccessAlarms />}

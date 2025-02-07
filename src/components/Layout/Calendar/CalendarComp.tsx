@@ -6,22 +6,11 @@ import moment from "moment";
 import "moment-timezone";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import AppointmentEvent from "./AppointmentEvent";
-import { EVENTS } from "@/components/constant";
 import clsx from "clsx";
 import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useGetTasksQuery } from "@/store/taskApi";
-
-const testEvents = [
-  {
-    id: "test-event",
-    title: "Test Event",
-    start: new Date(), // Now
-    end: new Date(new Date().getTime() + 60 * 60 * 1000), // +1 hour
-    allDay: false,
-  },
-];
 
 const localizer = momentLocalizer(moment);
 type Keys = keyof typeof Views;
@@ -73,6 +62,8 @@ const CalendarComponent = () => {
         id: task.id,
         title: task.task_title,
         start,
+        category: task.taskCategory,
+        scheduleStart: task.scheduleStart,
         end,
         allDay: false,
       };
@@ -82,11 +73,10 @@ const CalendarComponent = () => {
   const components = useMemo(
     () => ({
       event: ({ event }: any) => {
-        console.log(event);
-        return <AppointmentEvent task={testEvents} />;
+        return <AppointmentEvent task={event} />;
       },
     }),
-    [events]
+    []
   );
 
   const onNextClick = useCallback(() => {
@@ -170,7 +160,7 @@ const CalendarComponent = () => {
             margin: "0 auto",
           }}
           className="shadow-lg bg-inherit"
-          // components={components}
+          components={components}
           date={date} // Pass the `date` state
           onNavigate={(newDate) => setDate(newDate)} // Sync navigation
           onView={(newView) => handleViewChange(newView)} // Sync view change
