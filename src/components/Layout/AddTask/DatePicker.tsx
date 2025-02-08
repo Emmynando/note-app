@@ -21,19 +21,22 @@ interface DatePickerCompProps {
 }
 
 const DatePickerComp = ({ onDateChange }: DatePickerCompProps) => {
-  const selectedDate = new Date();
-  const [startDate, setStartDate] = useState<Date | null>(
-    setHours(setMinutes(new Date(), 30), 16)
-  );
+  const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
   const onChange = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates;
-    setStartDate(start);
+
+    const defaultDate = (date: Date | null) => {
+      if (!date) return null;
+      return setHours(setMinutes(date, 0), 9);
+    };
+    const updateStart = defaultDate(start);
+    setStartDate(updateStart);
     setEndDate(end);
 
-    // Pass the updated dates to the parent via the callback
-    onDateChange({ startDate: start, endDate: end });
+    console.log(updateStart);
+    onDateChange({ startDate: updateStart, endDate: end });
   };
 
   const MyContainer = ({ className, children }: DatePickerProps) => {
@@ -49,7 +52,7 @@ const DatePickerComp = ({ onDateChange }: DatePickerCompProps) => {
   return (
     <main>
       <DatePicker
-        selected={selectedDate}
+        selected={startDate}
         onChange={onChange}
         startDate={startDate}
         endDate={endDate}

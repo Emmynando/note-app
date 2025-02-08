@@ -112,7 +112,6 @@ export default function IndexTask() {
           remindTime === startTime ||
           remindTime < nowTime)
       ) {
-        console.log(remindDate, startDate);
         toast.error(
           `Reminder ${remindDate} must be at least 15 minutes before your scheduled time ${startDate}`
         );
@@ -137,6 +136,14 @@ export default function IndexTask() {
         return;
       }
       toast.success("Task Added");
+      setCategory("");
+      setTaskTitle("");
+      setTaskBody("");
+      setSelectedRemindDates({
+        startDate: null,
+        endDate: null,
+      });
+      setSelectedScheduleDates({ startDate: null, endDate: null });
       closeAddListModal();
       return;
     } catch {
